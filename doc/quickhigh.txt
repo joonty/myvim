@@ -1,0 +1,105 @@
+*quickhigh.txt*  Plugin for highlighting quickfix errors
+
+For instructions on installing this file, type
+	:help add-local-help
+inside Vim.
+
+For Vim version 6.0.
+
+*quickhigh* *quickhigh.vim*
+
+1. Required Vim Features                                |quickhigh-required|
+2. Usage                                                |quickhigh-usage|
+3. Configuration                                        |quickhigh-config|
+
+The functionality mentioned here is a plugin, see |add-plugin|.
+You can avoid loading this plugin by setting the "loaded_quickhigh" variable
+in your |vimrc| file: >
+
+	:let loaded_quickhigh = 1
+
+==============================================================================
+1. Required Vim Features                    *quickhigh-required*
+
+This plugin needs a vim compiled with |:sign| support.  Without this an error
+is printed and the script will not load.
+
+For speed, this plugin requires |perl| support compiled in.  There is VimL
+code for compatibilty, but this will be slow when there are many errors.  The
+perl code is in a separate file (quickhigh.perl).
+
+==============================================================================
+2. Usage                                    *quickhigh-usage*
+
+Adding signs:
+
+To manually add signs after a |:make| or |:grep| command a mapping is
+provided.  By default, this is <Leader>qa and <Plug>QuickHighAdd.  With this
+method the user will be prompted for the type of error.
+
+To automatically add signs there are to supplied commands.  They are :Make and
+:Grep.
+
+Both methods will add signs in all open buffers and setup an |autocommand| to
+add signs in new files that are opened.
+
+Toggle signs:
+
+Sometimes it is desirable to remove the signs temporarily (e.g. to view the
+line with vim syntax highlighting only).  This functionality is provided as a
+map.  By default, it is set to <Leader>qt and <Plug>QuickHighToggle.
+
+Remove signs:
+
+To get rid of all signs and autocommands the mapping <Leader>qr and
+<Plug>QuickHighRemove is provided.
+
+==============================================================================
+3. Configuration                            *quickhigh-config*
+
+Mappings:
+
+To change the default maps, redefine one of the <Plug>QuickHigh... maps.  For
+example, place the following in a vimrc file: >
+
+    map <Leader>qc <Plug>QuickHighRemove
+
+This might make sense if the notion of clearing something makes more sense
+then removing.  The other mappings will remain at the defaults.
+
+Signs:
+
+The signs used by this plugin are configurable.  See |:sign-define| for the
+format.  For example, place the following in a vimrc file to remove the ER
+text from errors: >
+
+    sign define QuickHighMakeError linehl=Error texthl=Error
+
+In addition, if your compiler generates different messages for errors and
+warnings, then it is possible to differentiate them.  This is done by setting
+two buffer variables.  These variables are interpreted as regular expressions
+passed to |match()|.  One matches errors and the other matches warnings.
+
+If a line would match both errors and warnings, then errors has precedence.
+If a line would match neither, then it is assumed to be an error.  If it is
+desired to not try and make a match, then that variable should not exist.  For
+example, if a C compiler places " warning:" in front of all warnings, but does
+not do anything for errors, then place the following in a C ftplugin file (see
+|ftplugins| for details): >
+
+    unlet! b:quickhigh_error_re
+    let b:quickhigh_warning_re  = "^ warning"
+
+Summary:
+
+    Maps:
+    <Plug>QuickHighAdd
+    <Plug>QuickHighToggle
+    <Plug>QuickHighRemove
+    
+    Signs:
+    QuickHighMakeError
+    QuickHighMakeWarning
+    QuickHighGrep
+    b:quickhigh_error_re
+    b:quickhigh_warning_re
