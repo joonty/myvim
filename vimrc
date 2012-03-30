@@ -161,6 +161,7 @@ let g:miniBufExplModSelTarget = 1
 
 "Escape insert with jj
 inoremap jj <Esc>
+inoremap <C-z> <C-x><C-u>
 
 nnoremap JJJJ <Nop>
 
