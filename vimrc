@@ -103,6 +103,14 @@ function! CleanClose(tosave,bang)
 endfunction
 "}}}
 
+let g:sass_output_file = ""
+command! Sass call SassCompile()
+
+function! SassCompile()
+	let g:sass_output_file = input("Please specify an output CSS file: ",g:sass_output_file,"file")
+	exe "!sass --no-cache --style compressed ".@%." ".g:sass_output_file
+endfunction
+
 "}}}
 
 "{{{ Settings
