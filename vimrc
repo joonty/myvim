@@ -32,6 +32,7 @@ Bundle 'tpope/vim-fugitive.git'
 Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
+Bundle 'pydave/AsyncCommand.git'
 "}}}
 
 filetype plugin indent on     " required! 

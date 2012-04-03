@@ -399,6 +399,7 @@ class DebugUI:
     if self.mode == 1: # is debug mode ?
       return
     self.mode = 1
+    vim.command('tabnew')
     # save session
     vim.command('mksession! ' + self.sessfile)
     for i in range(1, len(vim.windows)+1):
@@ -406,12 +407,12 @@ class DebugUI:
       self.winbuf[i] = vim.eval('bufnr("%")') # save buffer number, mksession does not do job perfectly
                                               # when buffer is not saved at all.
 
-    vim.command('silent topleft new')                # create srcview window (winnr=1)
+    vim.command('silent leftabove new')                # create srcview window (winnr=1)
     for i in range(2, len(vim.windows)+1):
       vim.command(str(i)+'wincmd w')
       vim.command('hide')
     self.create()
-    vim.command('1wincmd w') # goto srcview window(nr=1, top-left)
+    vim.command('2wincmd w') # goto srcview window(nr=1, top-left)
     self.cursign = '1'
 
     self.set_highlight()
@@ -428,7 +429,8 @@ class DebugUI:
     self.destroy()
 
     # restore session
-    vim.command('source ' + self.sessfile)
+    "vim.command('source ' + self.sessfile)"
+    vim.command('tabc')
     os.system('rm -f ' + self.sessfile)
 
     self.set_highlight()
@@ -443,9 +445,9 @@ class DebugUI:
   def create(self):
     """ create windows """
     self.watchwin.create('vertical belowright new')
-    self.helpwin.create('belowright new')
+    "self.helpwin.create('belowright new')"
     self.stackwin.create('belowright new')
-    self.tracewin.create('belowright new')
+    self.tracewin.create('rightbelow new')
 
   def set_highlight(self):
     """ set vim highlight of debugger sign """
@@ -454,12 +456,12 @@ class DebugUI:
 
   def destroy(self):
     """ destroy windows """
-    self.helpwin.destroy()
+    "self.helpwin.destroy()"
     self.watchwin.destroy()
     self.stackwin.destroy()
     self.tracewin.destroy()
   def go_srcview(self):
-    vim.command('1wincmd w')
+    vim.command('2wincmd w')
   def next_sign(self):
     if self.cursign == '1':
       return '2'
