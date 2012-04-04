@@ -33,6 +33,8 @@ Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
 Bundle 'pydave/AsyncCommand.git'
+Bundle 'shawncplus/phpcomplete.vim.git'
+Bundle 'xolox/vim-easytags.git'
 "}}}
 
 filetype plugin indent on     " required! 
@@ -144,6 +146,15 @@ set wildmenu
 set wildmode=list:longest,full
 set mouse=a
 set nohidden
+"PHP
+let php_sql_query=1
+let php_htmlInStrings=1
+" Tags
+set updatetime=5000
+let g:easytags_updatetime_min=5000
+"let g:easytags_by_filetype=1
+"let g:easytags_dynamic_files=1
+"set tags=./.tags;,~/.vimtags
 "}}}
 
 " Favorite Color Scheme
@@ -201,6 +212,7 @@ nnoremap \ :GundoToggle<CR>
 " " PHP parser check (CTRL-L)
 autocmd! FileType php noremap <C-L> :!/usr/bin/php -l %<CR>
 autocmd! FileType php set omnifunc=phpcomplete#CompletePHP
+au FileType php set omnifunc=phpcomplete#CompletePHP
 
 "{{{ Commands
 command! Q q
