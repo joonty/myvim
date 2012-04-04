@@ -1,4 +1,5 @@
 set nocompatible               " be iMproved
+
 filetype off                   " required!
 let mapleader=","
 
@@ -15,15 +16,14 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
 Bundle 'scrooloose/nerdtree.git'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
-Bundle 'bufexplorer.zip'
+Bundle 'vimprj'
+Bundle 'DfrankUtil'
+Bundle 'indexer.tar.gz'
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
 " ...
 Bundle 'joonty/ManPageView.git'
 Bundle 'joonty/vim-phpqa.git'
@@ -34,7 +34,6 @@ Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
 Bundle 'pydave/AsyncCommand.git'
 Bundle 'shawncplus/phpcomplete.vim.git'
-Bundle 'xolox/vim-easytags.git'
 "}}}
 
 filetype plugin indent on     " required! 
@@ -147,14 +146,9 @@ set wildmode=list:longest,full
 set mouse=a
 set nohidden
 "PHP
+let g:tags_default="/home/jon/.vimtags.php"
 let php_sql_query=1
 let php_htmlInStrings=1
-" Tags
-set updatetime=5000
-let g:easytags_updatetime_min=5000
-"let g:easytags_by_filetype=1
-"let g:easytags_dynamic_files=1
-"set tags=./.tags;,~/.vimtags
 "}}}
 
 " Favorite Color Scheme
@@ -212,7 +206,6 @@ nnoremap \ :GundoToggle<CR>
 " " PHP parser check (CTRL-L)
 autocmd! FileType php noremap <C-L> :!/usr/bin/php -l %<CR>
 autocmd! FileType php set omnifunc=phpcomplete#CompletePHP
-au FileType php set omnifunc=phpcomplete#CompletePHP
 
 "{{{ Commands
 command! Q q
