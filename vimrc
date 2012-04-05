@@ -34,6 +34,8 @@ Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
 Bundle 'pydave/AsyncCommand.git'
 Bundle 'shawncplus/phpcomplete.vim.git'
+Bundle 'ervandew/supertab.git'
+Bundle 'taglist.vim'
 "}}}
 
 filetype plugin indent on     " required! 
@@ -128,7 +130,6 @@ set wildmenu
 set wildmode=list:longest
 set wrapscan
 set clipboard=unnamed
-set shortmess=atI
 set visualbell
 set backspace=indent,eol,start
 "Status line coolness
@@ -145,8 +146,12 @@ set wildmenu
 set wildmode=list:longest,full
 set mouse=a
 set nohidden
+set shortmess+=filmnrxoOt
+set viewoptions=folds,options,cursor,unix,slash
+set history=1000
+set virtualedit=onemore
 "PHP
-let g:tags_default="/home/jon/.vimtags.php"
+set tags="/home/jon/.vimtags.php"
 let php_sql_query=1
 let php_htmlInStrings=1
 "}}}
@@ -224,3 +229,6 @@ com! DiffSaved call s:DiffWithSaved()
 let g:phpqa_codecoverage_autorun = 0
 let g:phpqa_messdetector_autorun = 0
 let g:phpqa_codesniffer_autorun = 0
+
+" Tab completion
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
