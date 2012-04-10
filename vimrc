@@ -106,13 +106,40 @@ function! CleanClose(tosave,bang)
 endfunction
 "}}}
 
+" {{{ Sass compile
 let g:sass_output_file = ""
+let g:sass_path_maps = {}
 command! Sass call SassCompile()
-
+autocmd BufWritePost *.scss call SassCompile()
 function! SassCompile()
-	let g:sass_output_file = input("Please specify an output CSS file: ",g:sass_output_file,"file")
-	exe "!sass --no-cache --style compressed ".@%." ".g:sass_output_file
+	let curfile = expand('%:p')
+	let inlist = 0
+	for fpath in keys(g:sass_path_maps)
+		if fpath == curfile
+			let g:sass_output_file = g:sass_path_maps[fpath]
+			let inlist = 1
+			break
+		endif
+	endfor
+	if g:sass_output_file == ""
+		let g:sass_output_file = input("Please specify an output CSS file: ",g:sass_output_file,"file")
+	endif
+	let l:op = system("sass --no-cache --style compressed ".@%." ".g:sass_output_file)
+	if l:op != ""
+		echohl Error | echo "Error compiling sass file" | echohl None
+		let &efm="Syntax error: %m %#on line %l of %f%.%#"
+		cgete [l:op]
+		cope
+	endif
+	if inlist == 0
+		let choice = confirm("Would you like to keep using this output path for this sass file?","&Yes\n&No")
+		if choice == 1
+			let g:sass_path_maps[curfile] = g:sass_output_file
+		endif
+	endif
+	let g:sass_output_file = ""
 endfunction
+"}}}
 
 "}}}
 
