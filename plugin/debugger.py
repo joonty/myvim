@@ -498,12 +498,13 @@ class DbgProtocol:
   def isconnected(self):
     return self.isconned
   def accept(self):
-    print 'waiting new connection in 10 sec.'
+    print 'waiting new connection (<C-d> to cancel)'
     serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
       serv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+      serv.settimeout(None)
       serv.bind(('', self.port))
-      serv.listen(10)
+      serv.listen(5)
       (self.sock, address) = serv.accept()
     except socket.timeout:
       serv.close()

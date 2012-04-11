@@ -11,7 +11,7 @@ map <F5> :python debugger_run()<cr>
 map <F6> :python debugger_quit()<cr>
 
 "map <F7> :echo 'not yet'
-"map <F8> :python debugger.ui.watchwin.clean()<cr>:python debugger.ui.watchwin.write('<?')<cr>:python debugger.ui.logwin.clean()<cr>
+map <F8> :python debugger.ui.watchwin.clean()<cr>:python debugger.ui.watchwin.write('<?')<cr>:python debugger.ui.logwin.clean()<cr>
 "map <F9> :echo 'not yet'
 
 map <F11> :python debugger_context()<cr>

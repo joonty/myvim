@@ -25,17 +25,16 @@ Bundle 'DfrankUtil'
 Bundle 'indexer.tar.gz'
 " non github repos
 " ...
-Bundle 'joonty/ManPageView.git'
 Bundle 'joonty/vim-phpqa.git'
 Bundle 'joonty/vim-sauce.git'
 Bundle 'tpope/vim-fugitive.git'
 Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
-Bundle 'pydave/AsyncCommand.git'
 Bundle 'shawncplus/phpcomplete.vim.git'
 Bundle 'ervandew/supertab.git'
 Bundle 'taglist.vim'
+Bundle 'spf13/PIV.git'
 "}}}
 
 filetype plugin indent on     " required! 
@@ -105,7 +104,32 @@ function! CleanClose(tosave,bang)
 	exe "bd".bng.todelbufNr
 endfunction
 "}}}
-
+"{{{ Run command and put output in scratch
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+  let isfirst = 1
+  let words = []
+  for word in split(a:cmdline)
+    if isfirst
+      let isfirst = 0  " don't change first word (shell command)
+    else
+      if word[0] =~ '\v[%#<]'
+        let word = expand(word)
+      endif
+      let word = shellescape(word, 1)
+    endif
+    call add(words, word)
+  endfor
+  let expanded_cmdline = join(words)
+  botright new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  call setline(1, 'You entered:  ' . a:cmdline)
+  call setline(2, 'Expanded to:  ' . expanded_cmdline)
+  call append(line('$'), substitute(getline(2), '.', '=', 'g'))
+  silent execute '$read !'. expanded_cmdline
+  1
+endfunction
+"}}}
 " {{{ Sass compile
 let g:sass_output_file = ""
 let g:sass_path_maps = {}
