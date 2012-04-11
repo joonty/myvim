@@ -27,6 +27,7 @@ Bundle 'indexer.tar.gz'
 " ...
 Bundle 'joonty/vim-phpqa.git'
 Bundle 'joonty/vim-sauce.git'
+Bundle 'joonty/vim-xdebug.git'
 Bundle 'tpope/vim-fugitive.git'
 Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
@@ -34,7 +35,6 @@ Bundle 'fholgado/minibufexpl.vim.git'
 Bundle 'shawncplus/phpcomplete.vim.git'
 Bundle 'ervandew/supertab.git'
 Bundle 'taglist.vim'
-Bundle 'spf13/PIV.git'
 "}}}
 
 filetype plugin indent on     " required! 
