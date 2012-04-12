@@ -199,7 +199,6 @@ set mouse=a
 set nohidden
 set shortmess+=filmnrxoOt
 set viewoptions=folds,options,cursor,unix,slash
-set history=1000
 set virtualedit=onemore
 "PHP
 set tags="/home/jon/.vimtags.php"
