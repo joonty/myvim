@@ -168,6 +168,7 @@ endfunction
 "}}}
 
 "{{{ Settings
+set ttyscroll=0
 set hidden
 set history=1000
 set ruler
@@ -244,7 +245,6 @@ nnoremap <C-y> 3<C-y>
 filetype on
 filetype plugin on
 filetype indent on
-map ; <Plug>ShowFunc 
 
 " Highlight search terms...
 nmap <silent> <leader>s :set nolist!<CR>
@@ -267,6 +267,7 @@ command! Q q
 command! -bang Q q<bang>
 
 command! W w
+command! -nargs=1 -complete=tag Tag tag <args>
 command! B buffers
 command! Sw w !sudo tee % > /dev/null
 command! -nargs=1 -complete=dir Tree NERDTree <args>
