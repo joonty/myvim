@@ -28,6 +28,7 @@ Bundle 'indexer.tar.gz'
 Bundle 'joonty/vim-phpqa.git'
 Bundle 'joonty/vim-sauce.git'
 Bundle 'joonty/vim-xdebug.git'
+Bundle 'joonty/vim-phpunitqf.git'
 Bundle 'tpope/vim-fugitive.git'
 Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
@@ -165,6 +166,13 @@ function! SassCompile()
 endfunction
 "}}}
 
+"{{{ CakePHP PHPunit tests
+
+function! CakePHPUnit()
+
+endfunction
+"}}}
+
 "}}}
 
 "{{{ Settings
@@ -265,6 +273,8 @@ autocmd! FileType php set omnifunc=phpcomplete#CompletePHP
 "{{{ Commands
 command! Q q
 command! -bang Q q<bang>
+command! Qall qall
+command! -bang Qall qall<bang>
 
 command! W w
 command! -nargs=1 -complete=tag Tag tag <args>
@@ -282,4 +292,8 @@ let g:phpqa_messdetector_autorun = 0
 let g:phpqa_codesniffer_autorun = 0
 
 " Tab completion
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
+
+let g:phpunit_cmd = "caketest"
+let g:phpunit_args = "--no-colors"
+
