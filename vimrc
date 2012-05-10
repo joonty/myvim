@@ -17,6 +17,7 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree.git'
+Bundle 'wincent/Command-T.git'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
@@ -209,8 +210,13 @@ set nohidden
 set shortmess+=filmnrxoOt
 set viewoptions=folds,options,cursor,unix,slash
 set virtualedit=onemore
+
+"Spaces, not tabs
+set shiftwidth=4
+set tabstop=4
+set expandtab
+
 "PHP
-set tags="/home/jon/.vimtags.php"
 let php_sql_query=1
 let php_htmlInStrings=1
 "}}}
@@ -261,14 +267,6 @@ nnoremap <C-d> :call PhpDocSingle()<CR>
 vnoremap <C-d> :call PhpDocRange()<CR> 
 nnoremap \ :GundoToggle<CR>
 "}}}
-
-" Autocommands
-"  
-" run file with PHP CLI (CTRL-M)
-"autocmd FileType php noremap <C-M> :w!<CR>:!/usr/bin/php %<CR>
-" " PHP parser check (CTRL-L)
-autocmd! FileType php noremap <C-L> :!/usr/bin/php -l %<CR>
-autocmd! FileType php set omnifunc=phpcomplete#CompletePHP
 
 "{{{ Commands
 command! Q q
