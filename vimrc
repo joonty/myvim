@@ -1,31 +1,24 @@
 set nocompatible               " be iMproved
 
 filetype off                   " required!
+
+"<Leader> key is ,
 let mapleader=","
 
+" Vundle init
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-
-let g:NERDTreeMapHelp = "h"
 
 "{{{ Vundle Bundles!
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
 "
-" original repos on github
+" repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree.git'
 Bundle 'wincent/Command-T.git'
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'vimprj'
-Bundle 'DfrankUtil'
-Bundle 'indexer.tar.gz'
-" non github repos
-" ...
 Bundle 'joonty/vim-phpqa.git'
 Bundle 'joonty/vim-sauce.git'
 Bundle 'joonty/vim-xdebug.git'
@@ -36,7 +29,13 @@ Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
 Bundle 'shawncplus/phpcomplete.vim.git'
 Bundle 'ervandew/supertab.git'
+" vim-scripts repos
 Bundle 'taglist.vim'
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+Bundle 'vimprj'
+Bundle 'DfrankUtil'
+Bundle 'indexer.tar.gz'
 "}}}
 
 filetype plugin indent on     " required! 
@@ -167,13 +166,6 @@ function! SassCompile()
 endfunction
 "}}}
 
-"{{{ CakePHP PHPunit tests
-
-function! CakePHPUnit()
-
-endfunction
-"}}}
-
 "}}}
 
 "{{{ Settings
@@ -221,7 +213,9 @@ let php_sql_query=1
 let php_htmlInStrings=1
 "}}}
 
-" Favorite Color Scheme
+let g:NERDTreeMapHelp = "h"
+
+" Set font for GUI (e.g. GVim)
 if has("gui_running")
 	set guifont=Anonymous\ Pro\ 13
 endif
@@ -231,10 +225,10 @@ let g:pdv_cfg_Author = "Jon Cairns <jon@22blue.co.uk>"
 let g:pdv_cfg_Copyright = "Copyright (c) 22 Blue ".strftime("%Y")
 let g:pdv_cfg_License = ""
 let g:pdv_cfg_Version = ""
-let g:pdv_cfg_Version = ""
+let g:pdv_cfg_php4always = 0
 "}}}
 
-"{{{ Mini Buffer
+"{{{ Mini Buffer settings
 let g:miniBufExplMapWindowNavVim = 1 
 let g:miniBufExplMapWindowNavArrows = 1 
 let g:miniBufExplMapCTabSwitchBufs = 1 
@@ -243,55 +237,60 @@ let g:miniBufExplModSelTarget = 1
 
 "{{{ Key Maps
 
-"Escape insert with jj
-inoremap jj <Esc>
+"Escape insert with ww
+inoremap ww <Esc>
 inoremap <C-z> <C-x><C-u>
-
 nnoremap JJJJ <Nop>
 
 " Open Url on this line with the browser \w
 map <Leader>b :call Browser ()<CR>
 
-"nnoremap y "+y
-"vnoremap y "+y
+" Instead of 1 line, move 3 at a time
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
-filetype on
-filetype plugin on
-filetype indent on
 
-" Highlight search terms...
+" Show hidden characters (spaces, tabs, etc) 
 nmap <silent> <leader>s :set nolist!<CR>
+" PHPDoc commands
 inoremap <C-d> <ESC>:call PhpDocSingle()<CR>i 
 nnoremap <C-d> :call PhpDocSingle()<CR> 
 vnoremap <C-d> :call PhpDocRange()<CR> 
+" Ultra-amazing history viewer
 nnoremap \ :GundoToggle<CR>
 "}}}
 
 "{{{ Commands
+" Common mistypings
 command! Q q
 command! -bang Q q<bang>
 command! Qall qall
 command! -bang Qall qall<bang>
-
 command! W w
 command! -nargs=1 -complete=tag Tag tag <args>
+" Shortcut to list buffers
 command! B buffers
+" Save a file that requires sudoing even when
+" you opened it as a normal user.
 command! Sw w !sudo tee % > /dev/null
+" Shortcut to NERDTree
 command! -nargs=1 -complete=dir Tree NERDTree <args>
+" Command to build ctags file
 command! -nargs=+ -complete=dir Rtags !ctags -R --languages=+PHP --exclude=build <args> | set tags=tags
-com! DiffSaved call s:DiffWithSaved()
+" Show difference between modified buffer and original file
+command! DiffSaved call s:DiffWithSaved()
 
 "}}}
 
 " PHPQA stuff
+" Turn autorun off, and turn it back on in individual
+" project settings
 let g:phpqa_codecoverage_autorun = 0
 let g:phpqa_messdetector_autorun = 0
 let g:phpqa_codesniffer_autorun = 0
 
-" Tab completion
+" Tab completion - local
 let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
 
+" PHPUnit stuff
 let g:phpunit_cmd = "caketest"
 let g:phpunit_args = "--no-colors"
-
