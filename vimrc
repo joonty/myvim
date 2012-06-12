@@ -22,6 +22,7 @@ Bundle 'wincent/Command-T.git'
 Bundle 'joonty/vim-phpqa.git'
 Bundle 'joonty/vim-sauce.git'
 Bundle 'joonty/vim-xdebug.git'
+"Bundle 'joonty/vim-debugger.git'
 Bundle 'joonty/vim-phpunitqf.git'
 Bundle 'joonty/vim-taggatron.git'
 Bundle 'tpope/vim-fugitive.git'
@@ -138,12 +139,12 @@ function! CakePHPTestCallback(args)
     " If no arguments are passed to :Test
     if len(l:args) is 0
         let l:file = expand('%')
-        if l:file =~ "^app/Test/Case.*"
+        if l:file =~ "^.*app/Test/Case.*"
             " If the current file is a unit test
-            let l:args = substitute(l:file,'^app/Test/Case/\(.\{-}\)Test\.php$','\1','')
+            let l:args = substitute(l:file,'^.*app/Test/Case/\(.\{-}\)Test\.php$','\1','')
         else
             " Otherwise try and run the test for this file
-            let l:args = substitute(l:file,'^app/\(.\{-}\)\.php$','\1','')
+            let l:args = substitute(l:file,'^.*app/\(.\{-}\)\.php$','\1','')
         endif
     endif
     return l:args
@@ -227,6 +228,7 @@ endfunction
 function! SetWindows()
 	" Always run this, as it refreshes with current dir
 	exec 'NERDTree'
+    exec 'silent res 500'
     let l:windows = GetKnownWindows()
     if !has_key(l:windows,'other')
         new
@@ -298,6 +300,26 @@ function! Wipeout()
     execute 'tabnext' l:currentTab
   endtry
 endfunction
+"}}}
+"{{{ Find and replace in multiple files
+command! -nargs=* -complete=file Fart call FindAndReplace(<f-args>)
+function! FindAndReplace(...)
+    if a:0 < 3
+        echohl Error | echo "Three arguments required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
+        return
+    endif
+    if a:0 > 3
+        echohl Error | echo "Too many arguments, three required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
+        return
+    endif
+    let l:pattern = a:1
+    let l:search = a:2
+    let l:replace = a:3
+    echo "Replacing occurences of '".l:search."' with '".l:replace."' in files matching '".l:pattern."'"
+
+    execute '!find . -name "'.l:pattern.'" -print | xargs -t sed -i "s/'.l:search.'/'.l:replace.'/g"'
+endfunction
+
 "}}}
 "}}}
 
