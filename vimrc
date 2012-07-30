@@ -363,6 +363,11 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 
+"Speed things up a bit
+set nocursorcolumn
+set nocursorline
+syntax sync minlines=256
+
 "PHP
 let php_sql_query=1
 let php_htmlInStrings=1
@@ -392,8 +397,8 @@ let g:miniBufExplModSelTarget = 1
 
 "{{{ Key Maps
 
-"Escape insert with ww
-inoremap ww <Esc>
+"Escape insert with 'jj', as you probably won't type that
+inoremap jj <Esc>
 inoremap <C-z> <C-x><C-u>
 nnoremap JJJJ <Nop>
 
