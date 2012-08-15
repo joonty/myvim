@@ -13,7 +13,7 @@ try
 	call vundle#rc()
 catch
 	echohl Error | echo "Vundle is not installed. Run 'cd ~/.vim/ && git submodule init && git submodule update'" | echohl None
-	exit
+	"exit
 endtry
 
 
@@ -344,11 +344,8 @@ endfunction
 "}}}
 
 "Fugitive (Git) in status line
-try
-	set statusline=branch:\ %{fugitive#statusline()}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
-catch
-	set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
-endtry
+
+set statusline=%{exists(\"*fugitive#statusline\")?\"branch:\ \".fugitive#statusline():\"\"}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 let g:NERDTreeMapHelp = "h"
 
