@@ -7,7 +7,15 @@ let mapleader=","
 
 " Vundle init
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+
+" Require Vundle
+try
+	call vundle#rc()
+catch
+	echohl Error | echo "Vundle is not installed. Run 'cd ~/.vim/ && git submodule init && git submodule update'" | echohl None
+	exit
+endtry
+
 
 "{{{ Vundle Bundles!
 Bundle 'gmarik/vundle'
@@ -22,7 +30,7 @@ Bundle 'wincent/Command-T.git'
 Bundle 'joonty/vim-phpqa.git'
 Bundle 'joonty/vim-sauce.git'
 "Bundle 'joonty/vim-xdebug.git'
-Bundle 'joonty/vim-debugger.git'
+Bundle 'joonty/vdebug.git'
 Bundle 'joonty/vim-phpunitqf.git'
 Bundle 'joonty/vim-taggatron.git'
 Bundle 'tpope/vim-fugitive.git'
@@ -45,6 +53,18 @@ runtime macros/matchit.vim
 let g:EasyMotion_leader_key = '<Space>'
 
 "{{{ Functions
+
+"{{{ Source vimrc files in a directory
+function! SourceAllFiles(dir)
+	let l:findop=system("find ".a:dir." -name \"*.vimrc\"")
+	let l:sourcenames=split(l:findop,"\n")
+	for fname in l:sourcenames
+		exec "source ".fname
+	endfor
+endfunction
+
+call SourceAllFiles($HOME."/.vim/vimrcs")
+"}}}
 
 "{{{ Open URL in browser
 
@@ -237,11 +257,11 @@ function! SetWindows()
         exec 'silent 1wincmd H'
         let l:windows = GetKnownWindows()
     endif
-    if !has_key(l:windows,'taglist')
-        exec 'TlistToggle'
-        exec 'silent 1wincmd L'
-        let l:windows = GetKnownWindows()
-    endif
+    "if !has_key(l:windows,'taglist')
+    "    exec 'TlistToggle'
+    "    exec 'silent 1wincmd L'
+    "    let l:windows = GetKnownWindows()
+    "endif
 
     if has_key(l:windows,'minibuf')
         exec 'silent '.l:windows['minibuf'].'wincmd W'
@@ -256,11 +276,11 @@ function! SetWindows()
     exec 'normal gg'
     let l:windows = GetKnownWindows()
 
-    exec 'silent '.l:windows['taglist'].'wincmd W'
-    exec 'silent '.l:windows['taglist'].'wincmd L'
-    exec 'silent 500winc < | 30winc >'
+    "exec 'silent '.l:windows['taglist'].'wincmd W'
+    "exec 'silent '.l:windows['taglist'].'wincmd L'
+    "exec 'silent 500winc < | 30winc >'
 
-    let l:windows = GetKnownWindows()
+    "let l:windows = GetKnownWindows()
 
     exec 'silent '.l:windows['other'].'wincmd W'
     exec 'silent res 500'
@@ -323,55 +343,12 @@ endfunction
 "}}}
 "}}}
 
-"{{{ Settings
-set ttyscroll=0
-set hidden
-set history=1000
-set ruler
-set ignorecase
-set smartcase
-set title
-set scrolloff=3
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set wildmenu
-set wildmode=list:longest
-set wrapscan
-set clipboard=unnamed
-set visualbell
-set backspace=indent,eol,start
-"Status line coolness
-set laststatus=2
-set statusline=branch:\ %{fugitive#statusline()}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
-set showcmd
-" Search things
-set hlsearch
-set incsearch " ...dynamically as they are typed.
-set listchars=tab:>-,trail:·,eol:$
-" Folds
-set foldmethod=marker
-set wildmenu
-set wildmode=list:longest,full
-set mouse=a
-set nohidden
-set shortmess+=filmnrxoOt
-set viewoptions=folds,options,cursor,unix,slash
-set virtualedit=onemore
-
-"Spaces, not tabs
-set shiftwidth=4
-set tabstop=4
-set expandtab
-
-"Speed things up a bit
-set nocursorcolumn
-set nocursorline
-syntax sync minlines=256
-
-"PHP
-let php_sql_query=1
-let php_htmlInStrings=1
-"}}}
+"Fugitive (Git) in status line
+try
+	set statusline=branch:\ %{fugitive#statusline()}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+catch
+	set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+endtry
 
 let g:NERDTreeMapHelp = "h"
 
@@ -379,14 +356,6 @@ let g:NERDTreeMapHelp = "h"
 if has("gui_running")
     set guifont=Anonymous\ Pro\ 13
 endif
-
-"{{{ PHPDoc
-let g:pdv_cfg_Author = "Jon Cairns <jon@22blue.co.uk>"
-let g:pdv_cfg_Copyright = "Copyright (c) 22 Blue ".strftime("%Y")
-let g:pdv_cfg_License = ""
-let g:pdv_cfg_Version = ""
-let g:pdv_cfg_php4always = 0
-"}}}
 
 "{{{ Mini Buffer settings
 let g:miniBufExplMapWindowNavVim = 1 
@@ -419,41 +388,14 @@ inoremap <C-d> <ESC>:call PhpDocSingle()<CR>i
 nnoremap <C-d> :call PhpDocSingle()<CR> 
 vnoremap <C-d> :call PhpDocRange()<CR> 
 " Ultra-amazing history viewer
-nnoremap \ :GundoToggle<CR>
+nnoremap <C-G> :GundoToggle<CR>
 "}}}
-
-"{{{ Commands
-" Common mistypings
-command! Q q
-command! -bang Q q<bang>
-command! Qall qall
-command! -bang Qall qall<bang>
-command! W w
-command! -nargs=1 -complete=tag Tag tag <args>
-" Save a file that requires sudoing even when
-" you opened it as a normal user.
-command! Sw w !sudo tee % > /dev/null
-" Shortcut to NERDTree
-command! -nargs=1 -complete=dir Tree NERDTree <args>
-" Command to build ctags file
-command! -nargs=+ -complete=dir Rtags !ctags -R --languages=+PHP --exclude=build <args> | set tags=tags
-" Show difference between modified buffer and original file
-command! DiffSaved call s:DiffWithSaved()
-
-"}}}
-
-" PHPQA stuff
-" Turn autorun off, and turn it back on in individual
-" project settings
-let g:phpqa_codecoverage_autorun = 0
-let g:phpqa_messdetector_autorun = 0
-let g:phpqa_codesniffer_autorun = 0
 
 " Tab completion - local
 let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
 
-" PHPUnit stuff
-let g:phpunit_cmd = "caketest"
-let g:phpunit_args = "--no-colors --stderr"
+" Vdebug options
+let g:vdebug_options = {"on_close":"detach"}
 
+" Vim snippets location
 let g:snippets_dir = "~/.vim/snippets/"
