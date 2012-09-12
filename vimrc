@@ -29,7 +29,6 @@ Bundle 'scrooloose/nerdtree.git'
 Bundle 'wincent/Command-T.git'
 Bundle 'joonty/vim-phpqa.git'
 Bundle 'joonty/vim-sauce.git'
-"Bundle 'joonty/vim-xdebug.git'
 Bundle 'joonty/vdebug.git'
 Bundle 'joonty/vim-phpunitqf.git'
 Bundle 'joonty/vim-taggatron.git'
@@ -65,7 +64,6 @@ endfunction
 
 call SourceAllFiles($HOME."/.vim/vimrcs")
 "}}}
-
 "{{{ Open URL in browser
 
 function! Browser ()
@@ -340,6 +338,9 @@ function! FindAndReplace(...)
     execute '!find . -name "'.l:pattern.'" -print | xargs -t sed -i "s/'.l:search.'/'.l:replace.'/g"'
 endfunction
 
+"}}}
+"{{{ Link 'Call' to 'call', for mistyping
+command! -nargs=* -complete=function Call exec 'call '.<f-args>
 "}}}
 "}}}
 

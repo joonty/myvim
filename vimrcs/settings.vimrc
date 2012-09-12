@@ -29,6 +29,7 @@ set nohidden
 set shortmess+=filmnrxoOt
 set viewoptions=folds,options,cursor,unix,slash
 set virtualedit=onemore
+set shell=bash\ --login
 
 "Spaces, not tabs
 set shiftwidth=4
