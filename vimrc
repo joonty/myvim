@@ -5,6 +5,21 @@ filetype off                   " required!
 "<Leader> key is ,
 let mapleader=","
 
+if has("win32")
+	let g:os = "win"
+else
+	let g:os = "unix"
+endif
+
+if g:os == "win"
+	set shell=C:/cygwin/bin/bash
+	set shellcmdflag=--login\ -c
+	set shellxquote=\"
+	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+	let $TMP=expand("$HOME/vim-tmp")
+	let $TEMP=expand("$HOME/vim-tmp")
+endif
+
 " Vundle init
 set rtp+=~/.vim/bundle/vundle/
 
@@ -33,6 +48,7 @@ Bundle 'joonty/vdebug.git'
 Bundle 'joonty/vim-phpunitqf.git'
 Bundle 'joonty/vim-taggatron.git'
 Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-rails.git'
 Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
