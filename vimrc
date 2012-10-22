@@ -52,9 +52,10 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
-Bundle 'shawncplus/phpcomplete.vim.git'
 Bundle 'ervandew/supertab.git'
+Bundle 'vim-ruby/vim-ruby.git'
 Bundle 'msanders/snipmate.vim.git'
+Bundle 'scrooloose/syntastic.git'
 " vim-scripts repos
 Bundle 'taglist.vim'
 Bundle 'L9'
@@ -186,10 +187,14 @@ endfunction
 "}}}
 " {{{ Sass compile
 let g:sass_output_file = ""
+let g:sass_enabled = 1
 let g:sass_path_maps = {}
 command! Sass call SassCompile()
 autocmd BufWritePost *.scss call SassCompile()
 function! SassCompile()
+    if g:sass_enabled == 0
+      return
+    endif
     let curfile = expand('%:p')
     let inlist = 0
     for fpath in keys(g:sass_path_maps)
@@ -413,3 +418,11 @@ let g:vdebug_options = {"on_close":"detach"}
 
 " Vim snippets location
 let g:snippets_dir = "~/.vim/snippets/"
+
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+let g:syntastic_enable_balloons = 1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_mode_map = { 'mode': 'active',
+                                'active_filetypes' : [],
+                                'passive_filetypes' : ['php'] }
