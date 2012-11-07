@@ -70,6 +70,17 @@ let g:EasyMotion_leader_key = '<Space>'
 
 "{{{ Functions
 
+"{{{ Restart rails
+command! RestartRails call RestartRails(getcwd())
+function! RestartRails(dir)
+    let l:ret=system("touch ".a:dir."/tmp/restart.txt")
+    if l:ret == ""
+        echo "Restarting Rails, like a boss"
+    else
+        echohl Error | echo "Failed to restart rails - is your working directory a rails app?" | echohl None
+    endif
+endfunction
+"}}}
 "{{{ Source vimrc files in a directory
 function! SourceAllFiles(dir)
 	let l:findop=system("find ".a:dir." -name \"*.vimrc\"")
