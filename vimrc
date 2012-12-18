@@ -28,38 +28,39 @@ try
 	call vundle#rc()
 catch
 	echohl Error | echo "Vundle is not installed. Run 'cd ~/.vim/ && git submodule init && git submodule update'" | echohl None
-	"exit
 endtry
 
 
 "{{{ Vundle Bundles!
-Bundle 'gmarik/vundle'
+if exists(':Bundle')
+	Bundle 'gmarik/vundle'
 
-" My Bundles here:
-"
-" repos on github
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'scrooloose/nerdtree.git'
-Bundle 'wincent/Command-T.git'
-Bundle 'joonty/vim-phpqa.git'
-Bundle 'joonty/vim-sauce.git'
-Bundle 'joonty/vdebug.git'
-Bundle 'joonty/vim-phpunitqf.git'
-Bundle 'joonty/vim-taggatron.git'
-Bundle 'tpope/vim-fugitive.git'
-Bundle 'tpope/vim-rails.git'
-Bundle 'greyblake/vim-preview.git'
-Bundle 'sjl/gundo.vim.git'
-Bundle 'fholgado/minibufexpl.vim.git'
-Bundle 'ervandew/supertab.git'
-Bundle 'vim-ruby/vim-ruby.git'
-Bundle 'msanders/snipmate.vim.git'
-Bundle 'scrooloose/syntastic.git'
-" vim-scripts repos
-Bundle 'taglist.vim'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+	" My Bundles here:
+	"
+	" repos on github
+	Bundle 'tpope/vim-fugitive'
+	Bundle 'Lokaltog/vim-easymotion'
+	Bundle 'scrooloose/nerdtree.git'
+	Bundle 'wincent/Command-T.git'
+	Bundle 'joonty/vim-phpqa.git'
+	Bundle 'joonty/vim-sauce.git'
+	Bundle 'joonty/vdebug.git'
+	Bundle 'joonty/vim-phpunitqf.git'
+	Bundle 'joonty/vim-taggatron.git'
+	Bundle 'tpope/vim-fugitive.git'
+	Bundle 'tpope/vim-rails.git'
+	Bundle 'greyblake/vim-preview.git'
+	Bundle 'sjl/gundo.vim.git'
+	Bundle 'fholgado/minibufexpl.vim.git'
+	Bundle 'ervandew/supertab.git'
+	Bundle 'vim-ruby/vim-ruby.git'
+	Bundle 'msanders/snipmate.vim.git'
+	Bundle 'scrooloose/syntastic.git'
+	" vim-scripts repos
+	Bundle 'taglist.vim'
+	Bundle 'L9'
+	Bundle 'FuzzyFinder'
+end
 "}}}
 
 filetype plugin indent on     " required! 
@@ -437,3 +438,5 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_mode_map = { 'mode': 'active',
             \                   'active_filetypes' : [],
             \                   'passive_filetypes' : ['php'] }
+
+let NERDTreeIgnore = ['\.pyc$','\.sock$']
