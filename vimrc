@@ -6,18 +6,18 @@ filetype off                   " required!
 let mapleader=","
 
 if has("win32")
-	let g:os = "win"
+    let g:os = "win"
 else
-	let g:os = "unix"
+    let g:os = "unix"
 endif
 
 if g:os == "win"
-	set shell=C:/cygwin/bin/bash
-	set shellcmdflag=--login\ -c
-	set shellxquote=\"
-	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-	let $TMP=expand("$HOME/vim-tmp")
-	let $TEMP=expand("$HOME/vim-tmp")
+    set shell=C:/cygwin/bin/bash
+    set shellcmdflag=--login\ -c
+    set shellxquote=\"
+    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+    let $TMP=expand("$HOME/vim-tmp")
+    let $TEMP=expand("$HOME/vim-tmp")
 endif
 
 " Vundle init
@@ -25,41 +25,41 @@ set rtp+=~/.vim/bundle/vundle/
 
 " Require Vundle
 try
-	call vundle#rc()
+    call vundle#rc()
 catch
-	echohl Error | echo "Vundle is not installed. Run 'cd ~/.vim/ && git submodule init && git submodule update'" | echohl None
+    echohl Error | echo "Vundle is not installed. Run 'cd ~/.vim/ && git submodule init && git submodule update'" | echohl None
 endtry
 
 
 "{{{ Vundle Bundles!
 if exists(':Bundle')
-	Bundle 'gmarik/vundle'
+    Bundle 'gmarik/vundle'
 
-	" My Bundles here:
-	"
-	" repos on github
-	Bundle 'tpope/vim-fugitive'
-	Bundle 'Lokaltog/vim-easymotion'
-	Bundle 'scrooloose/nerdtree.git'
-	Bundle 'wincent/Command-T.git'
-	Bundle 'joonty/vim-phpqa.git'
-	Bundle 'joonty/vim-sauce.git'
-	Bundle 'joonty/vdebug.git'
-	Bundle 'joonty/vim-phpunitqf.git'
-	Bundle 'joonty/vim-taggatron.git'
-	Bundle 'tpope/vim-fugitive.git'
-	Bundle 'tpope/vim-rails.git'
-	Bundle 'greyblake/vim-preview.git'
-	Bundle 'sjl/gundo.vim.git'
-	Bundle 'fholgado/minibufexpl.vim.git'
-	Bundle 'ervandew/supertab.git'
-	Bundle 'vim-ruby/vim-ruby.git'
-	Bundle 'msanders/snipmate.vim.git'
-	Bundle 'scrooloose/syntastic.git'
-	" vim-scripts repos
-	Bundle 'taglist.vim'
-	Bundle 'L9'
-	Bundle 'FuzzyFinder'
+    " My Bundles here:
+    "
+    " repos on github
+    Bundle 'tpope/vim-fugitive'
+    Bundle 'Lokaltog/vim-easymotion'
+    Bundle 'kchmck/vim-coffee-script'
+    Bundle 'scrooloose/nerdtree.git'
+    Bundle 'wincent/Command-T.git'
+    Bundle 'joonty/vim-phpqa.git'
+    Bundle 'joonty/vim-sauce.git'
+    Bundle 'joonty/vdebug.git'
+    Bundle 'joonty/vim-phpunitqf.git'
+    Bundle 'joonty/vim-taggatron.git'
+    Bundle 'tpope/vim-fugitive.git'
+    Bundle 'tpope/vim-rails.git'
+    Bundle 'greyblake/vim-preview.git'
+    Bundle 'fholgado/minibufexpl.vim.git'
+    Bundle 'ervandew/supertab.git'
+    Bundle 'vim-ruby/vim-ruby.git'
+    Bundle 'msanders/snipmate.vim.git'
+    Bundle 'scrooloose/syntastic.git'
+    " vim-scripts repos
+    Bundle 'taglist.vim'
+    Bundle 'L9'
+    Bundle 'FuzzyFinder'
 end
 "}}}
 
@@ -84,11 +84,11 @@ endfunction
 "}}}
 "{{{ Source vimrc files in a directory
 function! SourceAllFiles(dir)
-	let l:findop=system("find ".a:dir." -name \"*.vimrc\"")
-	let l:sourcenames=split(l:findop,"\n")
-	for fname in l:sourcenames
-		exec "source ".fname
-	endfor
+    let l:findop=system("find ".a:dir." -name \"*.vimrc\"")
+    let l:sourcenames=split(l:findop,"\n")
+    for fname in l:sourcenames
+        exec "source ".fname
+    endfor
 endfunction
 
 call SourceAllFiles($HOME."/.vim/vimrcs")
@@ -205,7 +205,7 @@ command! Sass call SassCompile()
 autocmd BufWritePost *.scss call SassCompile()
 function! SassCompile()
     if g:sass_enabled == 0
-      return
+        return
     endif
     let curfile = expand('%:p')
     let inlist = 0
@@ -260,25 +260,25 @@ function! GetKnownWindows()
     let l:ret = {}
     windo call add(l:wins, [winnr(), bufname('%')]) 
     for list in l:wins
-       if list[1] =~ "^.*__Tag_List__$"
-           let l:ret['taglist'] = list[0]
-       elseif list[1] == "-MiniBufExplorer-"
-           let l:ret['minibuf'] = list[0]
-       elseif list[1] =~ "NERD_tree_.*"
-           let l:ret['nerdtree'] = list[0]
-       else
-           if !has_key(l:ret,'other')
-               let l:ret['other'] = list[0]
-           endif
-       endif
+        if list[1] =~ "^.*__Tag_List__$"
+            let l:ret['taglist'] = list[0]
+        elseif list[1] == "-MiniBufExplorer-"
+            let l:ret['minibuf'] = list[0]
+        elseif list[1] =~ "NERD_tree_.*"
+            let l:ret['nerdtree'] = list[0]
+        else
+            if !has_key(l:ret,'other')
+                let l:ret['other'] = list[0]
+            endif
+        endif
     endfor
     return l:ret
 endfunction
 " }}}
 " {{{ Reset window arrangement (to the way I like it) if things mess up
 function! SetWindows()
-	" Always run this, as it refreshes with current dir
-	exec 'NERDTree'
+    " Always run this, as it refreshes with current dir
+    exec 'NERDTree'
     exec 'silent res 500'
     let l:windows = GetKnownWindows()
     if !has_key(l:windows,'other')
@@ -320,36 +320,36 @@ endfunction
 "}}}
 "{{{ Wipeout buffers not used
 function! Wipeout()
-  " list of *all* buffer numbers
-  let l:buffers = range(1, bufnr('$'))
+    " list of *all* buffer numbers
+    let l:buffers = range(1, bufnr('$'))
 
-  " what tab page are we in?
-  let l:currentTab = tabpagenr()
-  try
-    " go through all tab pages
-    let l:tab = 0
-    while l:tab < tabpagenr('$')
-      let l:tab += 1
+    " what tab page are we in?
+    let l:currentTab = tabpagenr()
+    try
+        " go through all tab pages
+        let l:tab = 0
+        while l:tab < tabpagenr('$')
+            let l:tab += 1
 
-      " go through all windows
-      let l:win = 0
-      while l:win < winnr('$')
-        let l:win += 1
-        " whatever buffer is in this window in this tab, remove it from
-        " l:buffers list
-        let l:thisbuf = winbufnr(l:win)
-        call remove(l:buffers, index(l:buffers, l:thisbuf))
-      endwhile
-    endwhile
+            " go through all windows
+            let l:win = 0
+            while l:win < winnr('$')
+                let l:win += 1
+                " whatever buffer is in this window in this tab, remove it from
+                " l:buffers list
+                let l:thisbuf = winbufnr(l:win)
+                call remove(l:buffers, index(l:buffers, l:thisbuf))
+            endwhile
+        endwhile
 
-    " if there are any buffers left, delete them
-    if len(l:buffers)
-      execute 'bwipeout' join(l:buffers)
-    endif
-  finally
-    " go back to our original tab page
-    execute 'tabnext' l:currentTab
-  endtry
+        " if there are any buffers left, delete them
+        if len(l:buffers)
+            execute 'bwipeout' join(l:buffers)
+        endif
+    finally
+        " go back to our original tab page
+        execute 'tabnext' l:currentTab
+    endtry
 endfunction
 "}}}
 "{{{ Find and replace in multiple files
@@ -418,8 +418,6 @@ nmap <silent> <leader>s :set nolist!<CR>
 inoremap <C-d> <ESC>:call PhpDocSingle()<CR>i 
 nnoremap <C-d> :call PhpDocSingle()<CR> 
 vnoremap <C-d> :call PhpDocRange()<CR> 
-" Ultra-amazing history viewer
-nnoremap <C-G> :GundoToggle<CR>
 "}}}
 
 " Tab completion - local
