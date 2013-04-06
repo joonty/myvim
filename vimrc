@@ -1,3 +1,4 @@
+if exists(':let')
 set nocompatible               " be iMproved
 
 filetype off                   " required!
@@ -50,16 +51,9 @@ if exists(':Bundle')
     Bundle 'joonty/vim-taggatron.git'
     Bundle 'tpope/vim-fugitive.git'
     Bundle 'tpope/vim-rails.git'
-    Bundle 'greyblake/vim-preview.git'
-    Bundle 'fholgado/minibufexpl.vim.git'
     Bundle 'ervandew/supertab.git'
-    Bundle 'vim-ruby/vim-ruby.git'
     Bundle 'msanders/snipmate.vim.git'
     Bundle 'scrooloose/syntastic.git'
-    " vim-scripts repos
-    Bundle 'taglist.vim'
-    Bundle 'L9'
-    Bundle 'FuzzyFinder'
 end
 "}}}
 
@@ -256,9 +250,9 @@ endfunction
 "}}}
 "{{{ Get a dictionary of expected windows and their numbers
 function! GetKnownWindows()
-    let l:wins=[] 
+    let l:wins=[]
     let l:ret = {}
-    windo call add(l:wins, [winnr(), bufname('%')]) 
+    windo call add(l:wins, [winnr(), bufname('%')])
     for list in l:wins
         if list[1] =~ "^.*__Tag_List__$"
             let l:ret['taglist'] = list[0]
@@ -388,22 +382,8 @@ if has("gui_running")
     set guifont=Anonymous\ Pro\ 13
 endif
 
-"{{{ Mini Buffer settings
-let g:miniBufExplMapWindowNavVim = 1 
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1 
-"}}}
-
 "{{{ Key Maps
-
-"Escape insert with 'jj', as you probably won't type that
-inoremap jj <Esc>
-inoremap <C-z> <C-x><C-u>
-nnoremap JJJJ <Nop>
-
-" Open Url on this line with the browser \w
-map <Leader>b :call Browser ()<CR>
+nnoremap <Leader>b :CommandTBuffer<CR>
 
 " Instead of 1 line, move 3 at a time
 nnoremap <C-e> 3<C-e>
@@ -412,13 +392,20 @@ nnoremap <C-y> 3<C-y>
 " My handy window reset function
 nnoremap <C-a> :call SetWindows()<CR>
 
-" Show hidden characters (spaces, tabs, etc) 
+" Show hidden characters (spaces, tabs, etc)
 nmap <silent> <leader>s :set nolist!<CR>
 " PHPDoc commands
-inoremap <C-d> <ESC>:call PhpDocSingle()<CR>i 
-nnoremap <C-d> :call PhpDocSingle()<CR> 
-vnoremap <C-d> :call PhpDocRange()<CR> 
+inoremap <C-d> <ESC>:call PhpDocSingle()<CR>i
+nnoremap <C-d> :call PhpDocSingle()<CR>
+vnoremap <C-d> :call PhpDocRange()<CR>
 "}}}
+
+" Show trailing white space
+match ExtraSpace /\s\+$/
+autocmd BufWinEnter * match ExtraSpace /\s\+$/
+autocmd InsertEnter * match ExtraSpace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraSpace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " Tab completion - local
 let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
@@ -438,3 +425,6 @@ let g:syntastic_mode_map = { 'mode': 'active',
             \                   'passive_filetypes' : ['php'] }
 
 let NERDTreeIgnore = ['\.pyc$','\.sock$']
+endif
+
+let g:vdebug_features = {'max_depth':1024}
