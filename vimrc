@@ -384,6 +384,8 @@ endif
 
 "{{{ Key Maps
 nnoremap <Leader>b :CommandTBuffer<CR>
+nnoremap <Leader>f :CommandTFlush<CR>
+nnoremap <Leader>j :CommandTJump<CR>
 
 " Instead of 1 line, move 3 at a time
 nnoremap <C-e> 3<C-e>
@@ -394,11 +396,20 @@ nnoremap <C-a> :call SetWindows()<CR>
 
 " Show hidden characters (spaces, tabs, etc)
 nmap <silent> <leader>s :set nolist!<CR>
+
 " PHPDoc commands
 inoremap <C-d> <ESC>:call PhpDocSingle()<CR>i
 nnoremap <C-d> :call PhpDocSingle()<CR>
 vnoremap <C-d> :call PhpDocRange()<CR>
+
+" Fugitive shortcuts
+nnoremap <Leader>c :Gcommit -a<CR>i
+nnoremap <Leader>g :Git 
+nnoremap <Leader>a :Git add %:p<CR>
 "}}}
+
+" Tree of nerd
+nnoremap <Leader>n :NERDTreeToggle<CR>
 
 " Show trailing white space
 match ExtraSpace /\s\+$/
