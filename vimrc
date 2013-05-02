@@ -1,4 +1,6 @@
-if exists(':let')
+if !exists(':let')
+    finish
+endif
 set nocompatible               " be iMproved
 
 filetype off                   " required!
@@ -43,7 +45,7 @@ if exists(':Bundle')
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'scrooloose/nerdtree.git'
-    Bundle 'wincent/Command-T.git'
+    Bundle 'kien/ctrlp.vim'
     Bundle 'joonty/vim-phpqa.git'
     Bundle 'joonty/vim-sauce.git'
     Bundle 'joonty/vdebug.git'
@@ -383,9 +385,12 @@ if has("gui_running")
 endif
 
 "{{{ Key Maps
-nnoremap <Leader>b :CommandTBuffer<CR>
-nnoremap <Leader>f :CommandTFlush<CR>
-nnoremap <Leader>j :CommandTJump<CR>
+" CtrlP
+nnoremap <Leader>t :CtrlP getcwd()<CR>
+nnoremap <Leader>f :CtrlPClearAllCaches<CR>
+nnoremap <Leader>b :CtrlPBuffer<CR>
+nnoremap <Leader>j :CtrlP ~/<CR>
+nnoremap <Leader>p :CtrlP<CR>
 
 " Instead of 1 line, move 3 at a time
 nnoremap <C-e> 3<C-e>
@@ -418,6 +423,8 @@ autocmd InsertEnter * match ExtraSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+let g:ctrlp_working_path_mode = 'ra'
+
 " Tab completion - local
 let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
 
@@ -436,6 +443,5 @@ let g:syntastic_mode_map = { 'mode': 'active',
             \                   'passive_filetypes' : ['php'] }
 
 let NERDTreeIgnore = ['\.pyc$','\.sock$']
-endif
 
-let g:vdebug_features = {'max_depth':1024}
+let g:vdebug_features = {'max_depth':3}
