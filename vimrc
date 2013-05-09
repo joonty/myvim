@@ -1,4 +1,4 @@
-if !exists(':let')
+if exists(':let') == 0
     finish
 endif
 set nocompatible               " be iMproved
