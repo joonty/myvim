@@ -41,7 +41,6 @@ if exists(':Bundle')
     " My Bundles here:
     "
     " repos on github
-    Bundle 'tpope/vim-fugitive'
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'scrooloose/nerdtree.git'
