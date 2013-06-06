@@ -56,6 +56,7 @@ if exists(':Bundle')
     Bundle 'ervandew/supertab.git'
     Bundle 'msanders/snipmate.vim.git'
     Bundle 'scrooloose/syntastic.git'
+    Bundle 'joonty/vim-tork.git'
 end
 "}}}
 
