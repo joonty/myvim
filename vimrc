@@ -52,6 +52,7 @@ if exists(':Bundle')
     Bundle 'joonty/vim-taggatron.git'
     Bundle 'tpope/vim-fugitive.git'
     Bundle 'tpope/vim-rails.git'
+    Bundle 'tpope/vim-markdown.git'
     Bundle 'ervandew/supertab.git'
     Bundle 'msanders/snipmate.vim.git'
     Bundle 'scrooloose/syntastic.git'
@@ -385,6 +386,18 @@ if has("gui_running")
 endif
 
 "{{{ Key Maps
+" Fast saving
+nnoremap <Leader>w :w<CR>
+inoremap <C-w> <Esc>:w<CR>
+vnoremap <Leader>w <Esc>:w<CR>
+
+nnoremap <Leader>x :x<CR>
+inoremap <C-x> <Esc>:x<CR>
+vnoremap <Leader>x <Esc>:x<CR>
+
+" Stop that damn ex mode
+nnoremap Q <nop>
+
 " CtrlP
 nnoremap <Leader>t :CtrlP getcwd()<CR>
 nnoremap <Leader>f :CtrlPClearAllCaches<CR>
