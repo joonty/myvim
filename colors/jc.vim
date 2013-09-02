@@ -35,7 +35,7 @@ hi WarningMsg   guifg=salmon         gui=none
 hi Pmenu        guifg=white          guibg=#445599		gui=none
 hi PmenuSel     guifg=#445599        guibg=gray
 hi WildMenu     guifg=gray           guibg=gray17		gui=none
-hi MatchParen	guifg=cyan           guibg=#6C6C6C		gui=bold
+hi MatchParen 	guifg=cyan           guibg=#6C6C6C		gui=bold
 hi DiffAdd      guifg=black          guibg=wheat1
 hi DiffChange   guifg=black          guibg=skyblue1
 hi DiffText     guifg=black          guibg=hotpink1		gui=none
@@ -55,6 +55,8 @@ hi Ignore       guifg=red            gui=none
 hi Todo         guifg=red            guibg=yellow2     gui=none
 
 " color terminal definitions
+hi Normal	      ctermfg=lightgrey    ctermbg=233
+hi Cursor       ctermfg=black        ctermbg=yellow
 hi SpecialKey   ctermfg=red
 hi NonText      cterm=bold           ctermfg=darkblue
 hi Directory    ctermfg=darkcyan
@@ -69,7 +71,7 @@ hi StatusLine   cterm=bold,reverse
 hi StatusLineNC cterm=reverse
 hi VertSplit    cterm=reverse
 hi Title        ctermfg=5
-hi Visual       cterm=reverse
+hi Visual       ctermbg=yellow       ctermfg=black
 hi VisualNOS    cterm=bold,underline
 hi WarningMsg   ctermfg=1
 hi WildMenu     ctermfg=0            ctermbg=3
@@ -79,14 +81,15 @@ hi DiffAdd      ctermbg=4
 hi DiffChange   ctermbg=5
 hi DiffDelete   cterm=bold           ctermfg=4         ctermbg=6
 hi DiffText     cterm=bold           ctermbg=1
-hi Comment      ctermfg=darkcyan
-hi Constant     ctermfg=brown
+hi Comment      ctermfg=90
+hi Constant     ctermfg=71
 hi Special      ctermfg=5
-hi Identifier   ctermfg=6
-hi Statement    ctermfg=3
+hi Identifier   ctermfg=23
+hi Statement    ctermfg=23
 hi PreProc      ctermfg=5
-hi Type         ctermfg=2
+hi Type         ctermfg=130
 hi Underlined   cterm=underline      ctermfg=5
 hi Ignore       ctermfg=darkgrey
 hi Error        cterm=bold           ctermfg=7         ctermbg=1
+hi Function     ctermfg=42
 

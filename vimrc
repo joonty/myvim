@@ -54,13 +54,13 @@ if exists(':Bundle')
     Bundle 'tpope/vim-rails.git'
     Bundle 'tpope/vim-markdown.git'
     Bundle 'ervandew/supertab.git'
-    Bundle 'msanders/snipmate.vim.git'
     Bundle 'scrooloose/syntastic.git'
     Bundle 'joonty/vim-tork.git'
+    Bundle 'rking/ag.vim'
 end
 "}}}
 
-filetype plugin indent on     " required! 
+filetype plugin indent on     " required!
 syntax enable
 colorscheme jc
 runtime macros/matchit.vim
@@ -99,7 +99,7 @@ function! Browser ()
 endfunction
 
 "}}}
-"{{{ Close quickfix with main window close 
+"{{{ Close quickfix with main window close
 au BufEnter * call MyLastWindow()
 function! MyLastWindow()
     " if the window is quickfix go on
@@ -398,6 +398,9 @@ vnoremap <Leader>x <Esc>:x<CR>
 " Stop that damn ex mode
 nnoremap Q <nop>
 
+" Quick nohl
+nnoremap <Leader>h :nohl<CR>
+
 " CtrlP
 nnoremap <Leader>t :CtrlP getcwd()<CR>
 nnoremap <Leader>f :CtrlPClearAllCaches<CR>
@@ -422,7 +425,7 @@ vnoremap <C-d> :call PhpDocRange()<CR>
 
 " Fugitive shortcuts
 nnoremap <Leader>c :Gcommit -a<CR>i
-nnoremap <Leader>g :Git 
+nnoremap <Leader>g :Git
 nnoremap <Leader>a :Git add %:p<CR>
 "}}}
 
@@ -435,6 +438,7 @@ autocmd BufWinEnter * match ExtraSpace /\s\+$/
 autocmd InsertEnter * match ExtraSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+nnoremap <leader>z :%s/\s\+$//<cr>:let @/=''<CR>
 
 let g:ctrlp_working_path_mode = 'ra'
 
