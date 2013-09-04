@@ -40,4 +40,7 @@ set expandtab
 set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
+
+" Line numbers
+set relativenumber
 "}}}

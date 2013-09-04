@@ -20,7 +20,7 @@ hi VertSplit    guifg=gray40         guibg=gray40		gui=none
 hi Folded       guifg=DarkSlateGray3 guibg=grey30		gui=none
 hi FoldColumn   guifg=tan            guibg=grey30		gui=none
 hi IncSearch    guifg=#b0ffff        guibg=#2050d0
-hi LineNr       guifg=burlywood3     gui=none
+hi LineNr       guifg=#606030        guibg=gray13   gui=none
 hi ModeMsg      guifg=SkyBlue        gui=none
 hi MoreMsg      guifg=SeaGreen       gui=none
 hi NonText      guifg=cyan           gui=none
@@ -44,28 +44,28 @@ hi ExtraSpace   ctermbg=red          guibg=red
 
 " syntax highlighting groups
 hi Comment      guifg=#F381F7         gui=italic
-hi Constant     guifg=#77FF79        gui=none
+hi Constant     guifg=#62D963        gui=none
 hi Identifier   guifg=#63B0FC        gui=none
 hi Function     guifg=#82EF2A        gui=none
 hi Statement    guifg=#63B0FC        gui=none
-hi PreProc      guifg=#82EF2A        gui=none
+hi PreProc      guifg=#D4C311        gui=none
 hi Type         guifg=#F29549        gui=none
-hi Special      guifg=orange          gui=none
+hi Special      guifg=orange         gui=none
 hi Ignore       guifg=red            gui=none
 hi Todo         guifg=red            guibg=yellow2     gui=none
 
 " color terminal definitions
-hi Normal	      ctermfg=lightgrey    ctermbg=233
+hi Normal	      ctermfg=7    ctermbg=233
 hi Cursor       ctermfg=black        ctermbg=yellow
 hi SpecialKey   ctermfg=red
 hi NonText      cterm=bold           ctermfg=darkblue
 hi Directory    ctermfg=darkcyan
 hi ErrorMsg     cterm=bold           ctermfg=7         ctermbg=1
 hi IncSearch    cterm=NONE           ctermfg=yellow    ctermbg=green
-hi Search       cterm=NONE           ctermfg=white     ctermbg=grey
+hi Search       cterm=NONE           ctermfg=4     ctermbg=7
 hi MoreMsg      ctermfg=darkgreen
 hi ModeMsg      cterm=NONE           ctermfg=brown
-hi LineNr       ctermfg=3
+hi LineNr       ctermfg=grey
 hi Question     ctermfg=green
 hi StatusLine   cterm=bold,reverse
 hi StatusLineNC cterm=reverse
@@ -81,12 +81,12 @@ hi DiffAdd      ctermbg=4
 hi DiffChange   ctermbg=5
 hi DiffDelete   cterm=bold           ctermfg=4         ctermbg=6
 hi DiffText     cterm=bold           ctermbg=1
-hi Comment      ctermfg=90
+hi Comment      ctermfg=13
 hi Constant     ctermfg=71
 hi Special      ctermfg=5
 hi Identifier   ctermfg=23
 hi Statement    ctermfg=23
-hi PreProc      ctermfg=5
+hi PreProc      ctermfg=11
 hi Type         ctermfg=130
 hi Underlined   cterm=underline      ctermfg=5
 hi Ignore       ctermfg=darkgrey

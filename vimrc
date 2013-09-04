@@ -372,6 +372,13 @@ endfunction
 "{{{ Link 'Call' to 'call', for mistyping
 command! -nargs=* -complete=function Call exec 'call '.<f-args>
 "}}}
+function! LineNumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
 "}}}
 
 "Fugitive (Git) in status line
@@ -400,6 +407,9 @@ nnoremap Q <nop>
 
 " Quick nohl
 nnoremap <Leader>h :nohl<CR>
+
+" Line number type toggle
+nnoremap <Leader>l :call LineNumberToggle()<cr>
 
 " CtrlP
 nnoremap <Leader>t :CtrlP getcwd()<CR>
@@ -462,3 +472,4 @@ let g:syntastic_mode_map = { 'mode': 'active',
 let NERDTreeIgnore = ['\.pyc$','\.sock$']
 
 let g:vdebug_features = {'max_depth':3}
+let g:tork_pre_command = "rvm use default@global > /dev/null"
