@@ -251,70 +251,6 @@ function! s:use_tabs()
     set noexpandtab
 endfunction
 "}}}
-"{{{ Get a dictionary of expected windows and their numbers
-function! GetKnownWindows()
-    let l:wins=[]
-    let l:ret = {}
-    windo call add(l:wins, [winnr(), bufname('%')])
-    for list in l:wins
-        if list[1] =~ "^.*__Tag_List__$"
-            let l:ret['taglist'] = list[0]
-        elseif list[1] == "-MiniBufExplorer-"
-            let l:ret['minibuf'] = list[0]
-        elseif list[1] =~ "NERD_tree_.*"
-            let l:ret['nerdtree'] = list[0]
-        else
-            if !has_key(l:ret,'other')
-                let l:ret['other'] = list[0]
-            endif
-        endif
-    endfor
-    return l:ret
-endfunction
-" }}}
-" {{{ Reset window arrangement (to the way I like it) if things mess up
-function! SetWindows()
-    " Always run this, as it refreshes with current dir
-    exec 'NERDTree'
-    exec 'silent res 500'
-    let l:windows = GetKnownWindows()
-    if !has_key(l:windows,'other')
-        new
-    endif
-    if !has_key(l:windows,'nerdtree')
-        exec 'silent 1wincmd H'
-        let l:windows = GetKnownWindows()
-    endif
-    "if !has_key(l:windows,'taglist')
-    "    exec 'TlistToggle'
-    "    exec 'silent 1wincmd L'
-    "    let l:windows = GetKnownWindows()
-    "endif
-
-    if has_key(l:windows,'minibuf')
-        exec 'silent '.l:windows['minibuf'].'wincmd W'
-        exec 'silent '.l:windows['minibuf'].'wincmd K'
-        exec 'silent res 2'
-        let l:windows = GetKnownWindows()
-    endif
-
-    exec 'silent '.l:windows['nerdtree'].'wincmd W'
-    exec 'silent '.l:windows['nerdtree'].'wincmd H'
-    exec 'silent 500winc < | 30winc >'
-    exec 'normal gg'
-    let l:windows = GetKnownWindows()
-
-    "exec 'silent '.l:windows['taglist'].'wincmd W'
-    "exec 'silent '.l:windows['taglist'].'wincmd L'
-    "exec 'silent 500winc < | 30winc >'
-
-    "let l:windows = GetKnownWindows()
-
-    exec 'silent '.l:windows['other'].'wincmd W'
-    exec 'silent res 500'
-
-endfunction
-"}}}
 "{{{ Wipeout buffers not used
 function! Wipeout()
     " list of *all* buffer numbers
@@ -372,6 +308,7 @@ endfunction
 "{{{ Link 'Call' to 'call', for mistyping
 command! -nargs=* -complete=function Call exec 'call '.<f-args>
 "}}}
+"{{{ Toggle relative and absolute line numbers
 function! LineNumberToggle()
   if(&relativenumber == 1)
     set number
@@ -379,6 +316,49 @@ function! LineNumberToggle()
     set relativenumber
   endif
 endfunc
+"}}}
+"{{{ Toggle the arrow keys
+
+let g:arrow_keys_enabled = 1
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
+function! ArrowKeysToggle()
+  if g:arrow_keys_enabled == 1
+    call DisableArrowKeys()
+    echo "Disabling arrow keys"
+    let g:arrow_keys_enabled = 0
+  else
+    call EnableArrowKeys()
+    echo "Enabling arrow keys"
+    let g:arrow_keys_enabled = 1
+  end
+endfunc
+
+function! EnableArrowKeys()
+  noremap <Up> k
+  inoremap <Up> <Up>
+  noremap <Down> j
+  inoremap <Down> <Down>
+  noremap <Left> h
+  inoremap <Left> <Left>
+  noremap <Right> l
+  inoremap <Right> <Right>
+endfunc
+
+function! DisableArrowKeys()
+  noremap <Up> <nop>
+  inoremap <Up> <nop>
+  noremap <Down> <nop>
+  inoremap <Down> <nop>
+  noremap <Left> <nop>
+  inoremap <Left> <nop>
+  noremap <Right> <nop>
+  inoremap <Right> <nop>
+endfunc
+"}}}
 "}}}
 
 "Fugitive (Git) in status line
@@ -395,11 +375,12 @@ endif
 "{{{ Key Maps
 " Fast saving
 nnoremap <Leader>w :w<CR>
-inoremap <C-w> <Esc>:w<CR>
 vnoremap <Leader>w <Esc>:w<CR>
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <Esc>:w<CR>
+vnoremap <C-s> <Esc>:w<CR>
 
 nnoremap <Leader>x :x<CR>
-inoremap <C-x> <Esc>:x<CR>
 vnoremap <Leader>x <Esc>:x<CR>
 
 " Stop that damn ex mode
@@ -422,9 +403,6 @@ nnoremap <Leader>p :CtrlP<CR>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" My handy window reset function
-nnoremap <C-a> :call SetWindows()<CR>
-
 " Show hidden characters (spaces, tabs, etc)
 nmap <silent> <leader>s :set nolist!<CR>
 
@@ -438,6 +416,9 @@ nnoremap <Leader>c :Gcommit -a<CR>i
 nnoremap <Leader>g :Git
 nnoremap <Leader>a :Git add %:p<CR>
 "}}}
+
+" Quick insert mode exit
+imap jk <Esc>
 
 " Tree of nerd
 nnoremap <Leader>n :NERDTreeToggle<CR>
