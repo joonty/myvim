@@ -57,6 +57,8 @@ if exists(':Bundle')
     Bundle 'scrooloose/syntastic.git'
     Bundle 'joonty/vim-tork.git'
     Bundle 'rking/ag.vim'
+    Bundle 'othree/html5.vim.git'
+    Bundle 'SirVer/ultisnips.git'
 end
 "}}}
 
@@ -438,9 +440,6 @@ let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
 
 " Vdebug options
 let g:vdebug_options = {"on_close":"detach"}
-
-" Vim snippets location
-let g:snippets_dir = "~/.vim/snippets/"
 
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
