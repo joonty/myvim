@@ -40,7 +40,6 @@ hi DiffAdd      guifg=black          guibg=wheat1
 hi DiffChange   guifg=black          guibg=skyblue1
 hi DiffText     guifg=black          guibg=hotpink1		gui=none
 hi DiffDelete   guibg=gray45         guifg=black		gui=none
-hi ExtraSpace   ctermbg=red          guibg=red
 
 " syntax highlighting groups
 hi Comment      guifg=#F381F7         gui=italic
