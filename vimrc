@@ -1,3 +1,6 @@
+scriptencoding utf-8
+set encoding=utf-8
+
 if exists(':let') == 0
     finish
 endif
@@ -64,7 +67,7 @@ end
 
 filetype plugin indent on     " required!
 syntax enable
-colorscheme jc
+colorscheme adaryn
 runtime macros/matchit.vim
 let g:EasyMotion_leader_key = '<Space>'
 
@@ -416,7 +419,7 @@ set relativenumber
 
 "Fugitive (Git) in status line
 
-set statusline=%{exists(\"*fugitive#statusline\")?\"branch:\ \".fugitive#statusline():\"\"}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+ set statusline=%{exists(\"*fugitive#statusline\")?\"branch:\ \".fugitive#statusline():\"\"}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 let g:NERDTreeMapHelp = "h"
 
@@ -505,3 +508,6 @@ let NERDTreeIgnore = ['\.pyc$','\.sock$']
 
 let g:vdebug_features = {'max_depth':3}
 let g:tork_pre_command = "rvm use default@global > /dev/null"
+
+" Phpqa settings
+let g:phpqa_codesniffer_args = "--standard=psr2"
