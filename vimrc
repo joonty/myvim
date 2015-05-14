@@ -1,4 +1,4 @@
-scriptencoding utf-8
+
 set encoding=utf-8
 
 if exists(':let') == 0
@@ -25,6 +25,9 @@ if g:os == "win"
     let $TMP=expand("$HOME/vim-tmp")
     let $TEMP=expand("$HOME/vim-tmp")
 endif
+
+" Set 256 colors
+set t_Co=256
 
 " Vundle init
 set rtp+=~/.vim/bundle/vundle/
@@ -62,6 +65,7 @@ if exists(':Bundle')
     Bundle 'rking/ag.vim'
     Bundle 'othree/html5.vim.git'
     Bundle 'SirVer/ultisnips.git'
+    Bundle 'idbrii/vim-sandydune.git'
 end
 "}}}
 
@@ -511,3 +515,6 @@ let g:tork_pre_command = "rvm use default@global > /dev/null"
 
 " Phpqa settings
 let g:phpqa_codesniffer_args = "--standard=psr2"
+
+" Custom settings
+hi StatusLine ctermbg=cyan ctermfg=black
