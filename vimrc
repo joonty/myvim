@@ -48,16 +48,14 @@ if exists(':Bundle')
     "
     " repos on github
     Bundle 'Lokaltog/vim-easymotion'
-    Bundle 'kchmck/vim-coffee-script'
     Bundle 'scrooloose/nerdtree.git'
     Bundle 'kien/ctrlp.vim'
     Bundle 'joonty/vim-phpqa.git'
+    Bundle 'joonty/vim-phpunitqf.git'
     Bundle 'joonty/vim-sauce.git'
     Bundle 'joonty/vdebug.git'
-    Bundle 'joonty/vim-phpunitqf.git'
     Bundle 'joonty/vim-taggatron.git'
     Bundle 'tpope/vim-fugitive.git'
-    Bundle 'tpope/vim-rails.git'
     Bundle 'tpope/vim-markdown.git'
     Bundle 'ervandew/supertab.git'
     Bundle 'scrooloose/syntastic.git'
@@ -65,7 +63,6 @@ if exists(':Bundle')
     Bundle 'rking/ag.vim'
     Bundle 'othree/html5.vim.git'
     Bundle 'SirVer/ultisnips.git'
-    Bundle 'idbrii/vim-sandydune.git'
 end
 "}}}
 
