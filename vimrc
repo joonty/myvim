@@ -517,3 +517,7 @@ let g:phpqa_codesniffer_args = "--standard=psr2"
 
 " Custom settings
 hi StatusLine ctermbg=cyan ctermfg=black
+
+" Split right and below, more natural
+set splitright
+set splitbelow
