@@ -65,6 +65,7 @@ if exists(':Bundle')
     Bundle 'SirVer/ultisnips.git'
     Bundle 'stephpy/vim-yaml.git'
     Bundle 'bling/vim-airline.git'
+    Bundle 'StanAngeloff/php.vim'
 end
 "}}}
 
@@ -521,3 +522,15 @@ hi StatusLine ctermbg=cyan ctermfg=black
 " Split right and below, more natural
 set splitright
 set splitbelow
+
+" Set php syntax highlight for doc tags
+
+function! PhpSyntaxOverride()
+  hi! def link phpDocTags  phpDefine
+  hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
