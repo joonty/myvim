@@ -66,6 +66,7 @@ if exists(':Bundle')
     Bundle 'stephpy/vim-yaml.git'
     Bundle 'bling/vim-airline.git'
     Bundle 'StanAngeloff/php.vim'
+    Bundle 'tacahiroy/ctrlp-funky'
 end
 "}}}
 
@@ -458,6 +459,10 @@ nnoremap <Leader>f :CtrlPClearAllCaches<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
 nnoremap <Leader>j :CtrlP ~/<CR>
 nnoremap <Leader>p :CtrlP<CR>
+
+" CtrlPFunky
+let g:ctrlp_funky_matchtype = 'path'
+nnoremap <Leader>r :CtrlPFunky<CR>
 
 " Instead of 1 line, move 3 at a time
 nnoremap <C-e> 3<C-e>
