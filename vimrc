@@ -29,49 +29,42 @@ endif
 " Set 256 colors
 set t_Co=256
 
-" Vundle init
-set rtp+=~/.vim/bundle/vundle/
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 
 " Require Vundle
 try
-    call vundle#rc()
+    call vundle#begin()
 catch
     echohl Error | echo "Vundle is not installed. Run 'cd ~/.vim/ && git submodule init && git submodule update'" | echohl None
 endtry
 
-
 "{{{ Vundle Bundles!
-if exists(':Bundle')
-    Bundle 'gmarik/vundle'
+if exists(':Vundle')
+    " let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
 
     " My Bundles here:
     "
     " repos on github
-    Bundle 'Lokaltog/vim-easymotion'
-    Bundle 'scrooloose/nerdtree.git'
-    Bundle 'kien/ctrlp.vim'
-    Bundle 'joonty/vim-phpqa.git'
-    Bundle 'joonty/vim-phpunitqf.git'
-    Bundle 'joonty/vim-sauce.git'
-    Bundle 'joonty/vdebug.git'
-    Bundle 'joonty/vim-taggatron.git'
-    Bundle 'tpope/vim-fugitive.git'
-    Bundle 'tpope/vim-markdown.git'
-    Bundle 'ervandew/supertab.git'
-    Bundle 'scrooloose/syntastic.git'
-    Bundle 'joonty/vim-tork.git'
-    Bundle 'rking/ag.vim'
-    Bundle 'othree/html5.vim.git'
-    Bundle 'SirVer/ultisnips.git'
-    Bundle 'stephpy/vim-yaml.git'
-    Bundle 'bling/vim-airline.git'
-    Bundle 'StanAngeloff/php.vim'
-    Bundle 'tacahiroy/ctrlp-funky'
-    Bundle 'christoomey/vim-tmux-navigator'
+    Plugin 'tpope/vim-fugitive.git'
+    Plugin 'Lokaltog/vim-easymotion'
+    Plugin 'scrooloose/nerdtree.git'
+    Plugin 'kien/ctrlp.vim'
+    Plugin 'joonty/vim-sauce.git'
+    Plugin 'joonty/vim-taggatron.git'
+    Plugin 'rking/ag.vim'
+    Plugin 'SirVer/ultisnips.git'
+    Plugin 'bling/vim-airline.git'
+    Plugin 'tacahiroy/ctrlp-funky'
+    Plugin 'christoomey/vim-tmux-navigator'
 end
 "}}}
 
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 filetype plugin indent on     " required!
+
 syntax enable
 colorscheme adaryn
 runtime macros/matchit.vim
@@ -79,17 +72,6 @@ let g:EasyMotion_leader_key = '<Space>'
 
 "{{{ Functions
 
-"{{{ Restart rails
-command! RestartRails call RestartRails(getcwd())
-function! RestartRails(dir)
-    let l:ret=system("touch ".a:dir."/tmp/restart.txt")
-    if l:ret == ""
-        echo "Restarting Rails, like a boss"
-    else
-        echohl Error | echo "Failed to restart rails - is your working directory a rails app?" | echohl None
-    endif
-endfunction
-"}}}
 "{{{ Open URL in browser
 
 function! Browser ()
@@ -173,63 +155,6 @@ function! s:RunShellCommand(cmdline)
     call append(line('$'), substitute(getline(2), '.', '=', 'g'))
     silent execute '$read !'. expanded_cmdline
     1
-endfunction
-"}}}
-"{{{ CakePHP unit test callback for PHPUnitQf
-function! CakePHPTestCallback(args)
-    " Trim white space
-    let l:args = substitute(a:args, '^\s*\(.\{-}\)\s*$', '\1', '')
-
-    " If no arguments are passed to :Test
-    if len(l:args) is 0
-        let l:file = expand('%')
-        if l:file =~ "^.*app/Test/Case.*"
-            " If the current file is a unit test
-            let l:args = substitute(l:file,'^.*app/Test/Case/\(.\{-}\)Test\.php$','\1','')
-        else
-            " Otherwise try and run the test for this file
-            let l:args = substitute(l:file,'^.*app/\(.\{-}\)\.php$','\1','')
-        endif
-    endif
-    return l:args
-endfunction
-"}}}
-" {{{ Sass compile
-let g:sass_output_file = ""
-let g:sass_enabled = 1
-let g:sass_path_maps = {}
-command! Sass call SassCompile()
-autocmd BufWritePost *.scss call SassCompile()
-function! SassCompile()
-    if g:sass_enabled == 0
-        return
-    endif
-    let curfile = expand('%:p')
-    let inlist = 0
-    for fpath in keys(g:sass_path_maps)
-        if fpath == curfile
-            let g:sass_output_file = g:sass_path_maps[fpath]
-            let inlist = 1
-            break
-        endif
-    endfor
-    if g:sass_output_file == ""
-        let g:sass_output_file = input("Please specify an output CSS file: ",g:sass_output_file,"file")
-    endif
-    let l:op = system("sass --no-cache --style compressed ".@%." ".g:sass_output_file)
-    if l:op != ""
-        echohl Error | echo "Error compiling sass file" | echohl None
-        let &efm="Syntax error: %m %#on line %l of %f%.%#"
-        cgete [l:op]
-        cope
-    endif
-    if inlist == 0
-        let choice = confirm("Would you like to keep using this output path for this sass file?","&Yes\n&No")
-        if choice == 1
-            let g:sass_path_maps[curfile] = g:sass_output_file
-        endif
-    endif
-    let g:sass_output_file = ""
 endfunction
 "}}}
 "{{{ Function to use spaces instead of tabs
@@ -423,9 +348,11 @@ syntax sync minlines=256
 set relativenumber
 "}}}
 
+"{{{ Airline settings
 "Fugitive (Git) in status line
 
  set statusline=%{exists(\"*fugitive#statusline\")?\"branch:\ \".fugitive#statusline():\"\"}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+"}}}
 
 let g:NERDTreeMapHelp = "h"
 
@@ -444,6 +371,10 @@ vnoremap <C-s> <Esc>:w<CR>
 
 nnoremap <Leader>x :x<CR>
 vnoremap <Leader>x <Esc>:x<CR>
+
+" Window manipulation
+nnoremap <leader>o :only<CR>
+vnoremap <leader>o :only<CR>
 
 " Stop that damn ex mode
 nnoremap Q <nop>
@@ -472,15 +403,16 @@ nnoremap <C-y> 3<C-y>
 " Show hidden characters (spaces, tabs, etc)
 nmap <silent> <leader>s :set nolist!<CR>
 
-" PHPDoc commands
-inoremap <C-d> <ESC>:call PhpDocSingle()<CR>i
-nnoremap <C-d> :call PhpDocSingle()<CR>
-vnoremap <C-d> :call PhpDocRange()<CR>
-
 " Fugitive shortcuts
 nnoremap <Leader>c :Gcommit -a<CR>i
 nnoremap <Leader>g :Git
 nnoremap <Leader>a :Git add %:p<CR>
+
+" Custom shortcuts for navigation
+nnoremap ∆ :m .+1<CR>==   " Alt-j - Move line down
+nnoremap ˚ :m .-2<CR>==   " Alt-j - Move line down
+nnoremap ˙ :tabp<CR>==    " Alt-h - move to previous tab
+nnoremap ¬ :tabn<CR>==    " Alt-l - move to next tab
 "}}}
 
 " Quick insert mode exit
@@ -500,27 +432,7 @@ nnoremap <leader>z :%s/\s\+$//<cr>:let @/=''<CR>
 
 let g:ctrlp_working_path_mode = 'ra'
 
-" Tab completion - local
-let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
-
-" Vdebug options
-let g:vdebug_options = {"on_close":"detach"}
-
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_signs=1
-let g:syntastic_enable_balloons = 1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_mode_map = { 'mode': 'active',
-            \                   'active_filetypes' : [],
-            \                   'passive_filetypes' : ['php'] }
-
 let NERDTreeIgnore = ['\.pyc$','\.sock$']
-
-let g:vdebug_features = {'max_depth':3}
-let g:tork_pre_command = "rvm use default@global > /dev/null"
-
-" Phpqa settings
-let g:phpqa_codesniffer_args = "--standard=psr2"
 
 " Custom settings
 hi StatusLine ctermbg=cyan ctermfg=black
@@ -528,22 +440,3 @@ hi StatusLine ctermbg=cyan ctermfg=black
 " Split right and below, more natural
 set splitright
 set splitbelow
-
-" Set php syntax highlight for doc tags
-
-function! PhpSyntaxOverride()
-  hi! def link phpDocTags  phpDefine
-  hi! def link phpDocParam phpType
-endfunction
-
-augroup phpSyntaxOverride
-  autocmd!
-  autocmd FileType php call PhpSyntaxOverride()
-augroup END
-
-" Custom shortcuts for navigation
-nmap <leader>o :only<CR>
-nnoremap ∆ :m .+1<CR>==   " Alt-j - Move line down
-nnoremap ˚ :m .-2<CR>==   " Alt-j - Move line down
-nnoremap ˙ :tabp<CR>==    " Alt-h - move to previous tab
-nnoremap ¬ :tabn<CR>==    " Alt-l - move to next tab
