@@ -67,6 +67,7 @@ if exists(':Bundle')
     Bundle 'bling/vim-airline.git'
     Bundle 'StanAngeloff/php.vim'
     Bundle 'tacahiroy/ctrlp-funky'
+    Bundle 'christoomey/vim-tmux-navigator'
 end
 "}}}
 
@@ -539,3 +540,10 @@ augroup phpSyntaxOverride
   autocmd!
   autocmd FileType php call PhpSyntaxOverride()
 augroup END
+
+" Custom shortcuts for navigation
+nmap <leader>o :only<CR>
+nnoremap ∆ :m .+1<CR>==   " Alt-j - Move line down
+nnoremap ˚ :m .-2<CR>==   " Alt-j - Move line down
+nnoremap ˙ :tabp<CR>==    " Alt-h - move to previous tab
+nnoremap ¬ :tabn<CR>==    " Alt-l - move to next tab
