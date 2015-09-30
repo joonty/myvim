@@ -51,9 +51,8 @@ if exists(':Vundle')
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'scrooloose/nerdtree.git'
     Plugin 'kien/ctrlp.vim'
-    Plugin 'joonty/vim-sauce.git'
     Plugin 'joonty/vim-taggatron.git'
-    Plugin 'rking/ag.vim'
+    Plugin 'zhaocai/dbext.vim'
     Plugin 'SirVer/ultisnips.git'
     Plugin 'bling/vim-airline.git'
     Plugin 'tacahiroy/ctrlp-funky'
@@ -440,3 +439,8 @@ hi StatusLine ctermbg=cyan ctermfg=black
 " Split right and below, more natural
 set splitright
 set splitbelow
+
+" Dbext profiles
+let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=whatever:dbname=mysql:extra=-t'
+let g:dbext_default_profile_mysql_local_DBI = 'type=DBI:user=malakskywalker:passwd=5U3r0e6G967fS2I:driver=mysql:conn_parms=database=fabric;host=127.0.0.1;port=3307'
+let g:dbext_default_profile_mysql_local_ODBC = 'type=ODBC:user=root:passwd=whatever:dsnname=mysql'
