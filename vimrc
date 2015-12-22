@@ -41,6 +41,7 @@ if exists(':Bundle')
     " My Bundles here:
     "
     " repos on github
+    Bundle 'joonty/vim-do'
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'scrooloose/nerdtree.git'
@@ -59,6 +60,10 @@ if exists(':Bundle')
     Bundle 'rking/ag.vim'
     Bundle 'othree/html5.vim.git'
     Bundle 'SirVer/ultisnips.git'
+    Bundle 'pangloss/vim-javascript.git'
+    Bundle 'mxw/vim-jsx.git'
+    Bundle 'rust-lang/rust.vim.git'
+    Bundle 'StanAngeloff/php.vim.git'
 end
 "}}}
 
@@ -187,7 +192,7 @@ endfunction
 "}}}
 " {{{ Sass compile
 let g:sass_output_file = ""
-let g:sass_enabled = 1
+let g:sass_enabled = 0
 let g:sass_path_maps = {}
 command! Sass call SassCompile()
 autocmd BufWritePost *.scss call SassCompile()
@@ -347,6 +352,43 @@ function! DisableArrowKeys()
   inoremap <Right> <nop>
 endfunc
 "}}}
+
+"{{{ Insert command output
+command -nargs=+ Iruby call InsertCommand("ruby " . <q-args>)
+command -nargs=+ Ipython call InsertCommand("python " . <q-args>)
+
+function! InsertCommand(command)
+    redir => output
+    silent execute a:command
+    redir END
+    call feedkeys('i'.substitute(output, '^[\n]*\(.\{-}\)[\n]*$', '\1', 'gm'))
+endfunction
+"}}}
+
+"{{{ Create new blog post for joncairns.com
+function! BlogPost(name)
+    let l:slug = substitute(substitute(tolower(a:name), " ", "-", "g"), '\[^a-z-]', "", "g")
+    let l:date = strftime("%Y-%m-%d")
+    let l:datetime = strftime("%Y-%m-%d %H:%M:%S")
+    Sauce joncairns
+    exec 'edit _posts/' . l:date . '-' . l:slug . '.markdown'
+    let @p= '---' . "\n" . '
+            \author: joonty' . "\n" .'
+            \comments: true' . "\n" .'
+            \date: ' . l:datetime . "\n" .'
+            \layout: post' . "\n" .'
+            \slug: ' . l:slug . "\n" .'
+            \title: ' . a:name . "\n" .'
+            \categories:' . "\n" .'
+            \- Dev' . "\n" .'
+            \tags:' . "\n" .'
+            \- ' . "\n" .'
+            \---'
+    put! p
+endfunction
+command -nargs=+ BlogPost call BlogPost(<q-args>)
+"}}}
+
 "}}}
 
 "{{{ Commands
@@ -398,7 +440,7 @@ set nohidden
 set shortmess+=filmnrxoOt
 set viewoptions=folds,options,cursor,unix,slash
 set virtualedit=onemore
-set shell=bash\ --login
+set shell=zsh\ --login
 
 "Spaces, not tabs
 set shiftwidth=4
@@ -484,6 +526,9 @@ autocmd InsertEnter * match ExtraSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 nnoremap <leader>z :%s/\s\+$//<cr>:let @/=''<CR>
+
+
+autocmd filetype crontab setlocal nobackup nowritebackup
 
 let g:ctrlp_working_path_mode = 'ra'
 
