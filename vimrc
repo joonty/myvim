@@ -34,44 +34,47 @@ catch
 endtry
 
 
-"{{{ Vundle Bundles!
-if exists(':Bundle')
-    Bundle 'gmarik/vundle'
+"{{{ Vundle Plugins!
+if exists(':Plugin')
+    Plugin 'gmarik/vundle'
 
     " Plugins
-    Bundle 'joonty/vim-do'
-    Bundle 'Lokaltog/vim-easymotion'
-    Bundle 'scrooloose/nerdtree.git'
-    Bundle 'joonty/vim-sauce.git'
-    Bundle 'joonty/vdebug.git'
-    Bundle 'joonty/vim-taggatron.git'
-    Bundle 'tpope/vim-fugitive.git'
-    Bundle 'tpope/vim-commentary.git'
-    Bundle 'tpope/vim-endwise.git'
-    Bundle 'ervandew/supertab.git'
-    Bundle 'joonty/vim-tork.git'
-    Bundle 'rking/ag.vim'
-    Bundle 'roman/golden-ratio'
-    Bundle 'pelodelfuego/vim-swoop'
-    Bundle 'ctrlpvim/ctrlp.vim'
-    Bundle 'itchyny/lightline.vim'
-    Bundle 'godlygeek/tabular'
+    "Plugin 'joonty/vim-do'
+    Plugin 'easymotion/vim-easymotion'
+    Plugin 'scrooloose/nerdtree.git'
+    Plugin 'vimwiki/vimwiki.git'
+    Plugin 'joonty/vim-sauce.git'
+    "Plugin 'joonty/vdebug.git'
+    Plugin 'joonty/vim-taggatron.git'
+    Plugin 'tpope/vim-fugitive.git'
+    Plugin 'tpope/vim-surround.git'
+    "Plugin 'tpope/vim-commentary.git'
+    Plugin 'tpope/vim-endwise.git'
+    Plugin 'ervandew/supertab.git'
+    "Plugin 'joonty/vim-tork.git'
+    Plugin 'rking/ag.vim'
+    Plugin 'zhaocai/GoldenView.Vim'
+    "Plugin 'pelodelfuego/vim-swoop'
+    Plugin 'ctrlpvim/ctrlp.vim'
+    Plugin 'lokikl/vim-ctrlp-ag'
+    "Plugin 'itchyny/lightline.vim'
+    "Plugin 'godlygeek/tabular'
 
     " Language support
-    Bundle 'scrooloose/syntastic.git'
-    Bundle 'kchmck/vim-coffee-script'
-    Bundle 'tpope/vim-rails.git'
-    Bundle 'tpope/vim-markdown.git'
-    Bundle 'othree/html5.vim.git'
-    Bundle 'pangloss/vim-javascript.git'
-    Bundle 'mxw/vim-jsx.git'
-    Bundle 'rust-lang/rust.vim.git'
-    Bundle 'StanAngeloff/php.vim.git'
-    Bundle 'elixir-lang/vim-elixir.git'
-    Bundle 'hdima/python-syntax.git'
+    Plugin 'scrooloose/syntastic.git'
+    "Plugin 'kchmck/vim-coffee-script'
+    Plugin 'tpope/vim-rails.git'
+    Plugin 'tpope/vim-markdown.git'
+    Plugin 'othree/html5.vim.git'
+    Plugin 'pangloss/vim-javascript.git'
+    Plugin 'mxw/vim-jsx.git'
+    Plugin 'rust-lang/rust.vim.git'
+    Plugin 'StanAngeloff/php.vim.git'
+    Plugin 'elixir-lang/vim-elixir.git'
+    Plugin 'hdima/python-syntax.git'
 
     " Colors
-    Bundle 'chriskempson/vim-tomorrow-theme'
+    Plugin 'chriskempson/vim-tomorrow-theme'
 end
 "}}}
 
@@ -490,7 +493,7 @@ let g:NERDTreeMapHelp = "h"
 
 " Set font for GUI (e.g. GVim)
 if has("gui_running")
-    set guifont=Anonymous\ Pro:h16
+    set guifont=Liberation\ Mono\ for\ Powerline\ 12
 endif
 
 "{{{ Key Maps
@@ -564,8 +567,6 @@ nnoremap <Leader>c :Gcommit -a<CR>i
 nnoremap <Leader>a :Git add %:p<CR>
 "}}}
 
-" Quick insert mode exit
-imap jk <Esc>
 
 " Tree of nerd
 nnoremap <Leader>n :NERDTreeToggle<CR>
@@ -599,15 +600,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_enable_balloons = 1
-let g:syntastic_mode_map = { 'mode': 'active',
-            \                   'active_filetypes' : [],
-            \                   'passive_filetypes' : ['php'] }
 let g:syntastic_eruby_ruby_quiet_messages =
     \ {'regex': 'possibly useless use of a variable in void context'}
 
 let g:syntastic_error_symbol = "❌"
 let g:syntastic_warning_symbol = "⚠️"
-let g:syntastic_ruby_mri_exec = "/Users/jon/.rbenv/shims/ruby"
 highlight SyntasticErrorSign guifg=white
 highlight SyntasticWarningSign guifg=white
 
@@ -634,3 +631,12 @@ let g:lightline = {
 
 let g:golden_ratio_exclude_nonmodifiable = 1
 let g:golden_ratio_wrap_ignored = 0
+set re=1
+
+cnoremap <expr> X (getcmdtype() is# ':' && empty(getcmdline())) ? 'x' : 'X'
+nnoremap <silent> <M-Right> <c-w>l
+nnoremap <silent> <M-Left> <c-w>h
+nnoremap <silent> <M-Up> <c-w>k
+nnoremap <silent> <M-Down> <c-w>j
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
