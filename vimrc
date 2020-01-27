@@ -52,13 +52,13 @@ if exists(':Plugin')
     Plugin 'tpope/vim-endwise.git'
     Plugin 'ervandew/supertab.git'
     "Plugin 'joonty/vim-tork.git'
-    Plugin 'rking/ag.vim'
+    Plugin 'jremmen/vim-ripgrep.git'
     Plugin 'zhaocai/GoldenView.Vim'
     "Plugin 'pelodelfuego/vim-swoop'
     Plugin 'ctrlpvim/ctrlp.vim'
-    Plugin 'lokikl/vim-ctrlp-ag'
     "Plugin 'itchyny/lightline.vim'
     "Plugin 'godlygeek/tabular'
+    Plugin 'FelikZ/ctrlp-py-matcher'
 
     " Language support
     Plugin 'scrooloose/syntastic.git'
@@ -523,27 +523,26 @@ nnoremap <Leader>h :nohl<CR>
 nnoremap <Leader>l :call LineNumberToggle()<cr>
 
 " Quick search
-nnoremap <C-f> :Ag ''<left>
+nnoremap <C-f> :Rg ''<left>
 " Quick search - word under cursor
-nnoremap <Leader>f :Ag <cword><CR>
-inoremap <Leader>f :Ag <cword><CR>
-vnoremap <Leader>f :<C-U>exec ":Ag '" . GetVisualSelection() ."'"<CR>
+nnoremap <Leader>f :Rg <cword><CR>
+inoremap <Leader>f :Rg <cword><CR>
+vnoremap <Leader>f :<C-U>exec ":Rg '" . GetVisualSelection() ."'"<CR>
 " Quick search - method call under cursor
-nnoremap <Leader>m :Ag \.<cword>\b<CR>
-inoremap <Leader>m :Ag \.<cword>\b<CR>
-vnoremap <Leader>m :<C-U>exec ":Ag '\." . GetVisualSelection() ."\b'"<CR>
+nnoremap <Leader>m :Rg \.<cword>\b<CR>
+inoremap <Leader>m :Rg \.<cword>\b<CR>
+vnoremap <Leader>m :<C-U>exec ":Rg '\." . GetVisualSelection() ."\b'"<CR>
 " Quick search - word under cursor in current file
-nnoremap <Leader>t :Ag <cword> %:p<CR>
-inoremap <Leader>t :Ag <cword> %:p<CR>
-vnoremap <Leader>t :<C-U>exec ":Ag '" . GetVisualSelection() ."' %:p"<CR>
+nnoremap <Leader>t :Rg <cword> %:p<CR>
+inoremap <Leader>t :Rg <cword> %:p<CR>
+vnoremap <Leader>t :<C-U>exec ":Rg '" . GetVisualSelection() ."' %:p"<CR>
 " Quick search - method definition under cursor
-nnoremap <Leader>d :Ag def\ \(self\.\)\?\<cword><CR>
-inoremap <Leader>d :Ag def\ \(self\.\)\?\<cword><CR>
+nnoremap <Leader>d :Rg def\ \(self\.\)\?\<cword><CR>
+inoremap <Leader>d :Rg def\ \(self\.\)\?\<cword><CR>
 
 " Ctrl-P
-let g:ctrlp_lazy_update = 1
-let g:ctrlp_regexp = 1
-let g:ctrlp_user_command = 'ag -l . %s'
+let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 nnoremap <Space>t :CtrlPCurWD<CR>
 nnoremap <Space>l :CtrlPLine<CR>
 nnoremap <Space>f :CtrlPCurFile<CR>
