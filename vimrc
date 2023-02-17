@@ -55,7 +55,7 @@ if exists(':Plugin')
     Plugin 'jremmen/vim-ripgrep.git'
     Plugin 'zhaocai/GoldenView.Vim'
     "Plugin 'pelodelfuego/vim-swoop'
-    Plugin 'ctrlpvim/ctrlp.vim'
+    Plugin 'kien/ctrlp.vim'
     "Plugin 'itchyny/lightline.vim'
     "Plugin 'godlygeek/tabular'
     Plugin 'FelikZ/ctrlp-py-matcher'
@@ -68,9 +68,10 @@ if exists(':Plugin')
     Plugin 'othree/html5.vim.git'
     Plugin 'pangloss/vim-javascript.git'
     Plugin 'mxw/vim-jsx.git'
-    Plugin 'rust-lang/rust.vim.git'
-    Plugin 'StanAngeloff/php.vim.git'
-    Plugin 'elixir-lang/vim-elixir.git'
+    Plugin 'vim-ruby/vim-ruby'
+    "Plugin 'rust-lang/rust.vim.git'
+    "Plugin 'StanAngeloff/php.vim.git'
+    "Plugin 'elixir-lang/vim-elixir.git'
     Plugin 'hdima/python-syntax.git'
 
     " Colors
